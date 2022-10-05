@@ -2,3 +2,5 @@
 .idea/
 
 src/ISSapp/__pycache__/
+
+src/src/__pycache__/

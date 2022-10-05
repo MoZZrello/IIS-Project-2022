@@ -1,0 +1,46 @@
+/*#main {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 35rem;*/
+    /*padding: 15rem 0;*/
+    /*background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/bg-masthead.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;*/
+/*}
+
+@media (min-width: 992px) {
+    #main {
+      /*height: 100vh;
+      padding: 0rem;
+    }
+}*/
+
+@font-face {
+  font-family: "My font";
+  src: 
+  url("fonts/2-Questa_Regular-webfont.woff") format("woff"),
+  url("fonts/2-Questa_Regular.otf") format("opentype");
+}
+
+.navbar-brand {
+  font-family: "My font";
+}
+
+.hs-bg-primary {
+  background-color: brown;
+}
+
+.hs-bg-secondary {
+  background-color: forestgreen;
+}
+
+.masthead h1, .masthead .h1 {
+  font-family: "My font";
+}
+
+#main {
+  font-family: "My font";
+}
