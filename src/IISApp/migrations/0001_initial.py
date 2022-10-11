@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                 ('phone_numb', phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=255, region=None)),
                 ('mail', models.EmailField(blank=True, max_length=255)),
                 ('user_verification', models.BooleanField()),
-                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISApp.user_roles')),
+                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISapp.user_roles')),
             ],
         ),
         migrations.CreateModel(
@@ -58,9 +58,9 @@ class Migration(migrations.Migration):
                 ('request_name', models.CharField(max_length=255)),
                 ('request_description', models.TextField(blank=True)),
                 ('request_verification', models.BooleanField()),
-                ('animal', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='IISApp.animal')),
-                ('contractor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contractor_name', to='IISApp.user')),
-                ('solver', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.PROTECT, related_name='solver_name', to='IISApp.user')),
+                ('animal', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='IISapp.animal')),
+                ('contractor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='contractor_name', to='IISapp.user')),
+                ('solver', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.PROTECT, related_name='solver_name', to='IISapp.user')),
             ],
         ),
         migrations.CreateModel(
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ('record_description', models.TextField(blank=True)),
                 ('record_start', models.DateTimeField()),
                 ('record_end', models.DateTimeField(blank=True)),
-                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISApp.animal')),
+                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISapp.animal')),
             ],
         ),
         migrations.CreateModel(
@@ -82,8 +82,8 @@ class Migration(migrations.Migration):
                 ('outing_start', models.DateTimeField()),
                 ('outing_end', models.DateTimeField(blank=True)),
                 ('outing_verification', models.BooleanField()),
-                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISApp.animal')),
-                ('user_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISApp.user')),
+                ('animal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISapp.animal')),
+                ('user_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IISapp.user')),
             ],
         ),
     ]
