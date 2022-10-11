@@ -11,8 +11,6 @@ class User_roles(models.Model):
     VOLUNTEER = 4
     UNREGISTERED = 5
 
-    # TODO pravomoci
-
     ROLES = (
         (ADMIN, 'Administrátor'),
         (KEEPER, 'Pečovatel'),
@@ -22,7 +20,19 @@ class User_roles(models.Model):
     )
 
     role = models.PositiveSmallIntegerField(choices=ROLES, default=UNREGISTERED)
-    competence = models.CharField(max_length=255)  # TODO pravomoci
+    user_manage = models.BooleanField()
+    animal_manage = models.BooleanField()
+    schedule_manage = models.BooleanField()
+    verify_volunteers = models.BooleanField()
+    verify_reservations = models.BooleanField()
+    make_requests = models.BooleanField()
+    make_veterinary_requests = models.BooleanField()
+    handle_requests = models.BooleanField()
+    handle_veterinary_requests = models.BooleanField()
+    edit_reports = models.BooleanField()
+    edit_veterinary_reports = models.BooleanField()
+    make_reservations = models.BooleanField()
+    outing_history_view = models.BooleanField()
 
     def __str__(self):
         return self.role
@@ -30,11 +40,13 @@ class User_roles(models.Model):
 
 class User(models.Model):
     role = models.ForeignKey(User_roles, on_delete=CASCADE)
-    user_name = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255)
     birthdate = models.DateField()
     phone_numb = PhoneNumberField(max_length=255, blank=True)
     mail = models.EmailField(max_length=255, blank=True)
     user_verification = models.BooleanField()
+    user_name = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
 
     def __str__(self):
         return self.user_name
@@ -61,10 +73,9 @@ class outing_reservation(models.Model):
 
 
 class record(models.Model):
-    # TODO typ záznamu
     animal = models.ForeignKey(Animal, on_delete=CASCADE)
     record_name = models.CharField(max_length=255)
-    record_type = models.CharField(max_length=255)  # TODO typ záznamu
+    record_type = models.CharField(max_length=255)
     record_description = models.TextField(blank=True)
     record_start = models.DateTimeField()
     record_end = models.DateTimeField(blank=True)
