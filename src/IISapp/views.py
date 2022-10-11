@@ -29,5 +29,5 @@ def register_page(request):
         if form.is_valid():
             form.save()
 
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'register.html', context)
