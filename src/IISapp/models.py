@@ -9,17 +9,15 @@ class User_roles(models.Model):
     KEEPER = 2
     VETERINARY = 3
     VOLUNTEER = 4
-    UNREGISTERED = 5
 
     ROLES = (
         (ADMIN, 'Administrátor'),
         (KEEPER, 'Pečovatel'),
         (VETERINARY, 'Veterinář'),
         (VOLUNTEER, 'Dobrovolník'),
-        (UNREGISTERED, 'Neregistrovaný uživatel')
     )
 
-    role = models.PositiveSmallIntegerField(choices=ROLES, default=UNREGISTERED)
+    role = models.PositiveSmallIntegerField(choices=ROLES, default=VOLUNTEER)
     user_manage = models.BooleanField()
     animal_manage = models.BooleanField()
     schedule_manage = models.BooleanField()
@@ -77,8 +75,6 @@ class record(models.Model):
     record_name = models.CharField(max_length=255)
     record_type = models.CharField(max_length=255)
     record_description = models.TextField(blank=True)
-    record_start = models.DateTimeField()
-    record_end = models.DateTimeField(blank=True)
 
 
 class requests(models.Model):
