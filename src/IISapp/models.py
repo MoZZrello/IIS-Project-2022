@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import PROTECT, SET_DEFAULT, CASCADE
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import AbstractBaseUser
 
 
 class User_roles(models.Model):
@@ -36,15 +37,18 @@ class User_roles(models.Model):
         return self.role
 
 
-class User(models.Model):
-    role = models.ForeignKey(User_roles, on_delete=CASCADE)
+class User(AbstractBaseUser):
+    role = models.ForeignKey(User_roles, on_delete=CASCADE, default=4)
     full_name = models.CharField(max_length=255)
     birthdate = models.DateField()
-    phone_numb = PhoneNumberField(max_length=255, blank=True)
+    phone_number = PhoneNumberField(max_length=255, blank=True)
     mail = models.EmailField(max_length=255, blank=True)
-    user_verification = models.BooleanField()
+    user_verification = models.BooleanField(default=0)
     user_name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
+
+    username = None
+    USERNAME_FIELD = 'user_name'
 
     def __str__(self):
         return self.user_name
