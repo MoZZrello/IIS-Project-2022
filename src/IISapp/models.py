@@ -34,7 +34,7 @@ class User_roles(models.Model):
     outing_history_view = models.BooleanField()
 
     def __str__(self):
-        return self.role
+        return f'{self.role}'
 
 
 class User(AbstractUser):
