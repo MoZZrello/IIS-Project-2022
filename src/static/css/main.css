@@ -10,7 +10,6 @@
     background-attachment: scroll;
     background-size: cover;
 }*/
-
 @media (min-width: 992px) {
     #main {
       height: 100vh;
@@ -45,4 +44,3 @@
 #main {
   font-family: "My font";
 }
-
