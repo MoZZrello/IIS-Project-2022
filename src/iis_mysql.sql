@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2022 at 09:09 PM
+-- Generation Time: Oct 18, 2022 at 03:54 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -131,6 +131,13 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `auth_user`
+--
+
+INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
+(1, 'pbkdf2_sha256$390000$p57r7ZJWLSMsVf3TiPnIWp$hB3dif471pJAH0j3w7S9bLmDjOVQ173TWcXFmzginz0=', '2022-10-12 21:35:48.208717', 1, 'admin', '', '', 'test@test.com', 1, 1, '2022-10-12 20:38:31.738614');
+
 -- --------------------------------------------------------
 
 --
@@ -239,7 +246,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (18, 'auth', '0012_alter_user_first_name_max_length', '2022-10-11 08:02:24.071748'),
 (19, 'sessions', '0001_initial', '2022-10-11 08:02:24.107749'),
 (21, 'IISapp', '0001_initial', '2022-10-12 18:14:12.985941'),
-(22, 'IISapp', '0002_remove_record_record_end_remove_record_record_start_and_more', '2022-10-12 19:07:19.115678');
+(22, 'IISapp', '0002_remove_record_record_end_remove_record_record_start_and_more', '2022-10-12 19:07:19.115678'),
+(23, 'IISapp', '0003_rename_phone_numb_user_phone_number_user_last_login', '2022-10-12 21:12:53.140595'),
+(24, 'IISapp', '0004_alter_user_options_alter_user_managers_and_more', '2022-10-18 12:22:00.047520');
 
 -- --------------------------------------------------------
 
@@ -252,6 +261,13 @@ CREATE TABLE `django_session` (
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `django_session`
+--
+
+INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('jo3wtwkqgy3079q32cxzn78owkouvbkh', '.eJxVjEEOwiAQRe_C2hDAOoBL956BzDCDVA1NSrsy3l2bdKHb_977L5VwXWpau8xpZHVWoA6_G2F-SNsA37HdJp2ntswj6U3RO-36OrE8L7v7d1Cx128dSjRCUiK74EVcsJ5iBsCcPYXBOIcQToTxCM4LcDRMbJ1BZrRDKer9Af0OOKE:1oklp8:WsZs3mMgeBMgUSsh5pxIWV5ReLuAlWbYAcmr2KdwSwk', '2022-11-01 12:35:58.169923');
 
 -- --------------------------------------------------------
 
@@ -360,23 +376,45 @@ CREATE TABLE `iisapp_user` (
   `id` bigint(20) NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `birthdate` date NOT NULL,
-  `phone_numb` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
   `user_verification` tinyint(1) NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role_id` bigint(20) NOT NULL
+  `role_id` bigint(20) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `last_name` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `iisapp_user`
 --
 
-INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_numb`, `mail`, `user_verification`, `user_name`, `password`, `role_id`) VALUES
-(1, 'Tester Admin', '2000-10-01', '774999555', 'tester@test.com', 1, 'admintester', 'test123', 1),
-(2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2),
-(3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3),
-(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4);
+INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail`, `user_verification`, `user_name`, `password`, `role_id`, `last_login`, `date_joined`, `email`, `first_name`, `is_active`, `is_staff`, `is_superuser`, `last_name`) VALUES
+(1, 'Tester Admin', '2000-10-01', '774999555', 'tester@test.com', 1, 'admintester', 'test123', 1, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
+(2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
+(3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
+(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
+(5, 'Richard Tester', '2003-02-05', '+421917993833', 'test@gmail.com', 0, 'tester_reg', 'pbkdf2_sha256$390000$vWOW5qO6qITHjVIEk614KL$cjXStBkQ45Z+4lOJwOoWqqiEKbaXeaidQHgfiv3TAvs=', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
+(6, 'Tester Registrace', '2006-01-26', '+12125552368', 'test@test.com', 0, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-18 12:35:58.166912', '2022-10-18 12:27:36.627011', '', '', 1, 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `iisapp_user_groups`
+--
+
+CREATE TABLE `iisapp_user_groups` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `group_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -411,6 +449,18 @@ INSERT INTO `iisapp_user_roles` (`id`, `role`, `user_manage`, `animal_manage`, `
 (2, 2, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0),
 (3, 3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0),
 (4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `iisapp_user_user_permissions`
+--
+
+CREATE TABLE `iisapp_user_user_permissions` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -524,13 +574,30 @@ ALTER TABLE `iisapp_requests`
 --
 ALTER TABLE `iisapp_user`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `IISapp_user_user_name_37459ed8_uniq` (`user_name`),
   ADD KEY `IISapp_user_role_id_ef7a69d0_fk_IISapp_user_roles_id` (`role_id`);
+
+--
+-- Indexes for table `iisapp_user_groups`
+--
+ALTER TABLE `iisapp_user_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `IISapp_user_groups_user_id_group_id_0b86923c_uniq` (`user_id`,`group_id`),
+  ADD KEY `IISapp_user_groups_group_id_ea87111d_fk_auth_group_id` (`group_id`);
 
 --
 -- Indexes for table `iisapp_user_roles`
 --
 ALTER TABLE `iisapp_user_roles`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `iisapp_user_user_permissions`
+--
+ALTER TABLE `iisapp_user_user_permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `IISapp_user_user_permissions_user_id_permission_id_c90d5dda_uniq` (`user_id`,`permission_id`),
+  ADD KEY `IISapp_user_user_per_permission_id_861b18ae_fk_auth_perm` (`permission_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -558,7 +625,7 @@ ALTER TABLE `auth_permission`
 -- AUTO_INCREMENT for table `auth_user`
 --
 ALTER TABLE `auth_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `auth_user_groups`
@@ -588,7 +655,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `iisapp_animal`
@@ -618,13 +685,25 @@ ALTER TABLE `iisapp_requests`
 -- AUTO_INCREMENT for table `iisapp_user`
 --
 ALTER TABLE `iisapp_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `iisapp_user_groups`
+--
+ALTER TABLE `iisapp_user_groups`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user_roles`
 --
 ALTER TABLE `iisapp_user_roles`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `iisapp_user_user_permissions`
+--
+ALTER TABLE `iisapp_user_user_permissions`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -690,6 +769,20 @@ ALTER TABLE `iisapp_requests`
 --
 ALTER TABLE `iisapp_user`
   ADD CONSTRAINT `IISapp_user_role_id_ef7a69d0_fk_IISapp_user_roles_id` FOREIGN KEY (`role_id`) REFERENCES `iisapp_user_roles` (`id`);
+
+--
+-- Constraints for table `iisapp_user_groups`
+--
+ALTER TABLE `iisapp_user_groups`
+  ADD CONSTRAINT `IISapp_user_groups_group_id_ea87111d_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  ADD CONSTRAINT `IISapp_user_groups_user_id_39ce48aa_fk_IISapp_user_id` FOREIGN KEY (`user_id`) REFERENCES `iisapp_user` (`id`);
+
+--
+-- Constraints for table `iisapp_user_user_permissions`
+--
+ALTER TABLE `iisapp_user_user_permissions`
+  ADD CONSTRAINT `IISapp_user_user_per_permission_id_861b18ae_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  ADD CONSTRAINT `IISapp_user_user_permissions_user_id_f7d80f4b_fk_IISapp_user_id` FOREIGN KEY (`user_id`) REFERENCES `iisapp_user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
