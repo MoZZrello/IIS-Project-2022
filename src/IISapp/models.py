@@ -75,6 +75,7 @@ class outing_reservation(models.Model):
     outing_start = models.DateTimeField()
     outing_end = models.DateTimeField(blank=True)
     outing_verification = models.BooleanField()
+    outing_assigned = models.BooleanField(default=False)
 
 
 class record(models.Model):
