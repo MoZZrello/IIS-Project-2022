@@ -14,7 +14,6 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'index.html')
 
 
-@login_required(login_url='login')
 def about(request: HttpRequest) -> HttpResponse:
     return render(request, 'about.html')
 
@@ -58,7 +57,11 @@ def register_page(request):
             if form.is_valid():
                 form.save()
                 user = form.cleaned_data.get('user_name')
-                messages.success(request, 'Účet uspešne vytvořen pro' + user)
+                messages.success(request, 'Účet uspešne vytvořen pro: ' + user)
                 return redirect('login')
         context = {'form': form}
         return render(request, 'register.html', context)
+
+
+def user_profil(request):
+    return render(request, 'profil.html')
