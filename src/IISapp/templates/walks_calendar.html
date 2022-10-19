@@ -4,7 +4,46 @@
 {% block title %}Kalendář procházek{% endblock %}
 
 {% block content %}
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Všechny rezervace</div>
+            <div><a class="btn btn-sm btn-info" href="{% url 'create_walk' %}" style="background-color: forestgreen;color: white;">Vytvořit rezervaci</a></div>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th>Dobrovolník</th>
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th>Potvrzeno</th>
+                <th></th>
+                <th></th>
+                {% for i in reservations %}
+                    <tr>
+                        <td>{{i.user_name}}</td>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
+                        <td>{{ i.outing_verification|yesno:"Ano,Ne" }}</td>
+                        <td><a href="{% url 'update_walk' i.id %}">Upravit</a></td>
+                        <td><a href="{% url 'delete_walk' i.id %}">Odstránit</a></td>
+                    </tr>
 
-<h3>Procházky</h3>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

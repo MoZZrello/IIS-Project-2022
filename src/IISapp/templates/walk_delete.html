@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<p>Naozaj chcete odstrániť "Procházku {{walk.id}}"?</p>
+
+<form action="{% url 'delete_walk' walk.id %}" method="POST">
+    {% csrf_token %}
+
+    <a href="{% url 'walks_calendar' %}">Zrušit<</a>
+    <input type="submit" name="Odstránit">
+</form>
+
+{% endblock %}

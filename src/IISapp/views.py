@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .decorators import *
-from .forms import CreateUserForm
+from .forms import *
 from .models import *
 
 
@@ -18,7 +18,8 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def about(request: HttpRequest) -> HttpResponse:
     animals = Animal.objects.all()
-    return render(request, 'about.html', {'animals':animals})
+    context = {'animals': animals}
+    return render(request, 'about.html', context)
 
 
 @login_required(login_url='login')
@@ -65,3 +66,47 @@ def register_page(request):
 
 def user_profil(request):
     return render(request, 'profil.html')
+
+
+def create_walk(request):
+    form = CreateWalkForm()
+
+    if request.method == 'POST':
+        form = CreateWalkForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('walks_calendar')
+
+    context = {'form': form}
+    return render(request, 'walk_creator.html', context)
+
+
+def update_walk(request, pk):
+    reservation = outing_reservation.objects.get(id=pk)
+    form = CreateWalkForm(instance=reservation)
+
+    if request.method == 'POST':
+        form = CreateWalkForm(request.POST, instance=reservation)
+        if form.is_valid():
+            form.save()
+            return redirect('walks_calendar')
+
+    context = {'form': form}
+    return render(request, 'walk_creator.html', context)
+
+
+def delete_walk(request, pk):
+    walk = outing_reservation.objects.get(id=pk)
+
+    if request.method == 'POST':
+        walk.delete()
+        return redirect('walks_calendar')
+
+    context = {'walk': walk}
+    return render(request, 'walk_delete.html', context)
+
+
+def walks_calendar(request):
+    reservations = outing_reservation.objects.all()
+    context = {'reservations': reservations}
+    return render(request, 'walks_calendar.html', context)
