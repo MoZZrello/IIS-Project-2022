@@ -5,6 +5,37 @@
 
 {% block content %}
 
-<h3>Profil</h3>
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Všechny vaše rezervace</div>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                {% for i in walks %}
+                    <tr>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

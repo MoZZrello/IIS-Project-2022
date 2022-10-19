@@ -18,6 +18,15 @@
             </div>
         </div>
 
+
+<div class="row">
+    <div class="col">
+        <form method="GET">
+            {{myFilter.form}}
+            <button class="btn btn-primary" type="submit">Filtrovat</button>
+        </form>
+    </div>
+</div>
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
@@ -27,11 +36,17 @@
             <table class="table">
                 <th>Jméno</th>
                 <th>Druh</th>
+                <th>Rasa</th>
+                <th>Věk</th>
+                <th>Dátum odchycení</th>
                 <th>Obrázek</th>
                 {% for i in animals %}
                     <tr>
                         <td>{{i.animal_name}}</td>
                         <td>{{i.species}}</td>
+                        <td>{{i.breed}}</td>
+                        <td>{{i.age}}</td>
+                        <td>{{i.capture_date|date:"d.n.Y"}}</td>
                         <td>{{i.image}}</td>
                     </tr>
 
@@ -40,6 +55,8 @@
         </div>
     </div>
 </div>
+
+
 <!--<div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
     <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/dog.jpg' %}" alt="..." /></div>
     <div class="col-lg-6">

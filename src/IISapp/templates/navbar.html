@@ -1,8 +1,9 @@
 {% url 'index' as index_url %}
 {% url 'about' as about_url %}
-{% url 'contact' as contact_url %}
+{% url 'walks_calendar' as walks_url %}
 {% url 'login' as login_url %}
 {% url 'logout' as logout_url %}
+{% url 'profil' as profile_url %}
 {% load static %}
 
 <nav class="navbar navbar-expand-lg hs-bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -15,19 +16,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
+
                 {% if user.is_authenticated %}
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded">Vítej, {{request.user.full_name}}!</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ profile_url }}">Vítej, {{request.user.full_name}}!</a></li>
                 {% endif %}
+
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ index_url }}">Domů</a></li>
                 
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ about_url }}">O nás</a></li>
+
                 {% if not user.is_authenticated %}
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ login_url }}">Přihlášení</a></li>
                 {% endif %}
-                {% if user.is_authenticated %}
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ contact_url }}">Kontakt</a></li>
 
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ logout_url }}">Odhlásit se</a></li>
+                {% if user.is_authenticated %}
+                    {% if user.role.id == 2 %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ walks_url }}">Procházky</a></li>
+                    {% endif %}
+
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ logout_url }}">Odhlásit se</a></li>
                 {% endif %}
             </ul>
         </div>

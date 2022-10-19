@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from .decorators import *
 from .forms import *
 from .models import *
+from .filters import *
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -18,7 +19,11 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def about(request: HttpRequest) -> HttpResponse:
     animals = Animal.objects.all()
-    context = {'animals': animals}
+
+    animalFilter = AnimalFilter(request.GET, queryset=animals)
+    animals = animalFilter.qs
+
+    context = {'animals': animals, 'myFilter': animalFilter}
     return render(request, 'about.html', context)
 
 
@@ -45,6 +50,7 @@ def login_page(request):
     return render(request, 'login.html', context)
 
 
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     return redirect('index')
@@ -64,10 +70,16 @@ def register_page(request):
     return render(request, 'register.html', context)
 
 
-def user_profil(request):
-    return render(request, 'profil.html')
+@login_required(login_url='login')
+def user_profile(request):
+    walks = outing_reservation.objects.filter(user_name=request.user.id)
+    print("WALKS: ", walks)
+    context = {'walks': walks}
+    return render(request, 'profil.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
 def create_walk(request):
     form = CreateWalkForm()
 
@@ -81,6 +93,8 @@ def create_walk(request):
     return render(request, 'walk_creator.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
 def update_walk(request, pk):
     reservation = outing_reservation.objects.get(id=pk)
     form = CreateWalkForm(instance=reservation)
@@ -95,6 +109,8 @@ def update_walk(request, pk):
     return render(request, 'walk_creator.html', context)
 
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
 def delete_walk(request, pk):
     walk = outing_reservation.objects.get(id=pk)
 
@@ -106,6 +122,7 @@ def delete_walk(request, pk):
     return render(request, 'walk_delete.html', context)
 
 
+@allowed_users(allowed_roles=['Pečovatel'])
 def walks_calendar(request):
     reservations = outing_reservation.objects.all()
     context = {'reservations': reservations}
