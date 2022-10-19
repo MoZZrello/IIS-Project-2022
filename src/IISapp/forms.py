@@ -1,7 +1,13 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Field
+from django.utils.translation import gettext_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import *
+
+Field.default_error_messages = {
+    'required': gettext_lazy('Tohle pole je povinné'),
+    'invalid': gettext_lazy('Hodnota není validní'),
+}
 
 
 class DateInput(forms.DateInput):
