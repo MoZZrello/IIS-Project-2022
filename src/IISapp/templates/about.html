@@ -18,12 +18,29 @@
             </div>
         </div>
 
-<h1>
-    Nasi mazlickove
-</h1>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Naši mazlíčkové</h5>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th>Jméno</th>
+                <th>Druh</th>
+                <th>Obrázek</th>
+                {% for i in animals %}
+                    <tr>
+                        <td>{{i.animal_name}}</td>
+                        <td>{{i.species}}</td>
+                        <td>{{i.image}}</td>
+                    </tr>
 
-<!-- Project One Row-->
-<div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<!--<div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
     <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/dog.jpg' %}" alt="..." /></div>
     <div class="col-lg-6">
         <div class="bg-black text-center h-100 project">
@@ -38,7 +55,6 @@
     </div>
 </div>
 
-<!-- Project Two Row-->
 <div class="row gx-0 justify-content-center">
     <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/dog2.jpg' %}" alt="..." /></div>
     <div class="col-lg-6 order-lg-first">
@@ -54,6 +70,6 @@
     </div>
 </div>
 </div>
-</section>
+</section>-->
 
 {% endblock %}

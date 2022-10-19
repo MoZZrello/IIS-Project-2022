@@ -17,7 +17,8 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    return render(request, 'about.html')
+    animals = Animal.objects.all()
+    return render(request, 'about.html', {'animals':animals})
 
 
 @login_required(login_url='login')
