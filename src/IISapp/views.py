@@ -136,8 +136,9 @@ def delete_walk(request, pk):
 
 @allowed_users(allowed_roles=['Pečovatel'])
 def walks_dashboard(request):
-    user = User.objects.all()
-    context = {'user': user}
+    user = request.user
+    reservations = outing_reservation.objects.all()
+    context = {'user': user, 'reservations': reservations}
     return render(request, 'walks_dashboard.html', context)
 
 
