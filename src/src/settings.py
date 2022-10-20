@@ -134,3 +134,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "IISapp.User"
+
+MEDIA_URL = '/img/'
+MEDA_ROOT = os.path.join(BASE_DIR, 'static/img')

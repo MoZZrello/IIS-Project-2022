@@ -10,7 +10,7 @@
 <form action="{% url 'delete_walk' walk.id %}" method="POST">
     {% csrf_token %}
 
-    <a href="{% url 'walks_calendar' %}">Zrušit<</a>
+    <a href="{% url 'walks_dashboard' %}">Zrušit<</a>
     <input type="submit" name="Odstránit">
 </form>
 

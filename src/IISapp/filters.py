@@ -14,3 +14,4 @@ class AnimalFilter(django_filters.FilterSet):
         model = Animal
         fields = ['animal_name', 'species', 'breed', 'age']
 
+

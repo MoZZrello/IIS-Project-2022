@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+import datetime
+
 from .decorators import *
 from .forms import *
 from .models import *
@@ -71,10 +73,12 @@ def register_page(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Dobrovolník', 'Veterinář', 'Pečovatel'])
 def user_profile(request):
     walks = outing_reservation.objects.filter(user_name=request.user.id)
-    print("WALKS: ", walks)
-    context = {'walks': walks}
+    walks_active = outing_reservation.objects.filter(user_name=request.user.id, outing_start__gte=datetime.datetime.now())
+
+    context = {'walks': walks, 'walks_active': walks_active}
     return render(request, 'profil.html', context)
 
 
@@ -87,7 +91,7 @@ def create_walk(request):
         form = CreateWalkForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('walks_calendar')
+            return redirect('walks_dashboard')
 
     context = {'form': form}
     return render(request, 'walk_creator.html', context)
@@ -103,7 +107,7 @@ def update_walk(request, pk):
         form = CreateWalkForm(request.POST, instance=reservation)
         if form.is_valid():
             form.save()
-            return redirect('walks_calendar')
+            return redirect('walks_dashboard')
 
     context = {'form': form}
     return render(request, 'walk_creator.html', context)
@@ -116,14 +120,14 @@ def delete_walk(request, pk):
 
     if request.method == 'POST':
         walk.delete()
-        return redirect('walks_calendar')
+        return redirect('walks_dashboard')
 
     context = {'walk': walk}
     return render(request, 'walk_delete.html', context)
 
 
 @allowed_users(allowed_roles=['Pečovatel'])
-def walks_calendar(request):
+def walks_dashboard(request):
     reservations = outing_reservation.objects.all()
     context = {'reservations': reservations}
-    return render(request, 'walks_calendar.html', context)
+    return render(request, 'walks_dashboard.html', context)

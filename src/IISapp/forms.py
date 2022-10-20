@@ -29,3 +29,10 @@ class CreateWalkForm(ModelForm):
         model = outing_reservation
         widgets = {'outing_start': forms.DateTimeInput(), 'outing_end': forms.DateTimeInput()}
         fields = '__all__'
+
+
+class ProfileForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'phone_number', 'email']

@@ -46,6 +46,7 @@ class User(AbstractUser):
     user_verification = models.BooleanField(default=0)
     user_name = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
+    profile_picture = models.ImageField(upload_to='static/img', default='profile_pic_default.jpg')
 
     username = None
     USERNAME_FIELD = 'user_name'
@@ -63,7 +64,7 @@ class Animal(models.Model):
     breed = models.CharField(max_length=255, blank=True)
     age = models.SmallIntegerField()
     animal_description = models.TextField(blank=True)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='static/img', default='profile_pic_default.jpg')
     capture_date = models.DateField()
     outing_suitable = models.BooleanField()
     animal_verification = models.BooleanField()

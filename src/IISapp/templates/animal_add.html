@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Kalendář procházek{% endblock %}
+{% block title %}Vytvoření procházek{% endblock %}
 
 {% block content %}
 
-<h3>Procházky</h3>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name="Submit">
+</form>
 
 {% endblock %}
