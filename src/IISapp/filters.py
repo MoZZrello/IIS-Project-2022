@@ -14,6 +14,7 @@ class AnimalFilter(django_filters.FilterSet):
         model = Animal
         fields = ['animal_name', 'species', 'breed', 'age']
 
+
 class UserFilter(django_filters.FilterSet):
     full_name = CharFilter(field_name="full_name", lookup_expr="icontains", label="Jméno")
     phone_number = CharFilter(field_name="phone_number", lookup_expr="icontains", label="Telefoní č.")

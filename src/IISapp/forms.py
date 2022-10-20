@@ -38,9 +38,15 @@ class CreateWalkForm(ModelForm):
 
 
 class ProfileForm(ModelForm):
+    full_name = forms.CharField(label="Celé jméno")
+    phone_number = forms.CharField(label="Telefon")
+    mail = forms.CharField(required=False, label="Email")
+    profile_picture = forms.ImageField(required=False, label="Profilová fotografie",
+                                       widget=MyClearableFileInput(attrs={'name': 'btn'}))
+
     class Meta:
         model = User
-        fields = ['full_name', 'phone_number', 'email']
+        fields = ['full_name', 'phone_number', 'mail', 'profile_picture']
 
 
 class AllUsersForm(ModelForm):

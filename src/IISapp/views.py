@@ -76,9 +76,6 @@ def register_page(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Dobrovolník', 'Veterinář', 'Pečovatel'])
 def user_profile(request):
-    walks = outing_reservation.objects.filter(user_name=request.user.id)
-    walks_active = outing_reservation.objects.filter(user_name=request.user.id,
-                                                     outing_start__gte=datetime.datetime.now())
     user = request.user
     form = ProfileForm(instance=user)
 
@@ -129,7 +126,6 @@ def update_walk(request, pk):
 @allowed_users(allowed_roles=['Pečovatel'])
 def delete_walk(request, pk):
     walk = outing_reservation.objects.get(id=pk)
-
     if request.method == 'POST':
         walk.delete()
         return redirect('walks_dashboard')
