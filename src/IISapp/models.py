@@ -46,7 +46,7 @@ class User(AbstractUser):
     user_verification = models.BooleanField(default=0)
     user_name = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    profile_picture = models.ImageField(upload_to='static/img', blank=True, default='profile_pic_default.jpg', null=True)
+    profile_picture = models.ImageField(upload_to='static/img', blank=True, null=True)
 
     username = None
     USERNAME_FIELD = 'user_name'
