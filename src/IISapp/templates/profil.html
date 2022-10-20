@@ -19,6 +19,9 @@
         margin: 0 auto;
         border-radius: 50%;
     }
+    #id_full_name, #id_phone_number, #id_email {
+        width: 400%;
+    }
 </style>
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 
@@ -27,17 +30,28 @@
         <div class="card card-body">
             <a class="btn btn-warning" href="{% url 'index' %}">&#8592; Domu</a>
             <hr>
-            <h3 style="text-align: center">Nastavení Profilu</h3>
+            <h3 style="text-align: center">Profil uživatele</h3>
+            <h1 style="text-align: center">{{request.user.user_name}}</h1>
             <hr>
             <img class="profile_pic" src="/static{{ request.user.profile_picture.url }}">
         </div>
     </div>
 
     <div class="col-md-9">
-        <div class="card card-body">
-            <form method="POST" action="">
+        <div class="card card-body" style="margin-right: 30px; margin-top: 40px">
+            <h3 style="text-align: center; margin: 20px">Nastavení Profilu</h3>
+            <form method="POST" action="" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input class="btn btn-primary" type="submit" name="Uložit změny">
+                    {% for field in form %}
+                    <div style="display: block; margin: 10px">
+                        {{ field.errors }}
+                        <div style="width: 20%; display: inline-block; vertical-align: top !important;" >{{ field.label_tag }}</div>
+                        <div style="display: inline-block">{{ field }}</div>
+                    </div>
+                    {% endfor %}
+                    <div style="margin-right: 0; margin-left: auto; width: 200px">
+                        <input class="btn btn-primary" type="submit" name="Submit" value="Uložit změny">
+                    </div>
             </form>
         </div>
     </div>

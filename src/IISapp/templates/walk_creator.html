@@ -4,12 +4,23 @@
 {% block title %}Vytvoření procházek{% endblock %}
 
 {% block content %}
+<style>
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+</style>
 
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" name="Submit">
-</form>
-
+<div class="">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" name="Submit" value="Vytvořit">
+    </form>
+</div>
 {% endblock %}
