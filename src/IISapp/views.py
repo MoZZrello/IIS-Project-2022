@@ -79,8 +79,18 @@ def user_profile(request):
     walks = outing_reservation.objects.filter(user_name=request.user.id)
     walks_active = outing_reservation.objects.filter(user_name=request.user.id,
                                                      outing_start__gte=datetime.datetime.now())
+    user = request.user
+    form = ProfileForm(instance=user)
 
-    context = {'walks': walks, 'walks_active': walks_active}
+    walks = outing_reservation.objects.filter(user_name=request.user.id, outing_start__lt=datetime.datetime.now())
+    walks_active = outing_reservation.objects.filter(user_name=request.user.id, outing_start__gte=datetime.datetime.now())
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+
+    context = {'walks': walks, 'walks_active': walks_active, 'form': form}
     return render(request, 'profil.html', context)
 
 

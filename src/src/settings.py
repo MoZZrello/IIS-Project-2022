@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
+    'django_filters',
     'IISapp',
 ]
 
@@ -136,3 +138,5 @@ AUTH_USER_MODEL = "IISapp.User"
 
 MEDIA_URL = '/img/'
 MEDA_ROOT = os.path.join(BASE_DIR, 'static/img')
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

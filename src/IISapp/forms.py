@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Field
+from django.forms import ModelForm, Field, ClearableFileInput
 from django.utils.translation import gettext_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -8,6 +8,13 @@ Field.default_error_messages = {
     'required': gettext_lazy('Tohle pole je povinné'),
     'invalid': gettext_lazy('Hodnota není validní'),
 }
+
+
+class MyClearableFileInput(ClearableFileInput):
+    template_name = 'widgets/customclearablefileinput.html'
+    clear_checkbox_label = 'Smazat'
+    initial_text = 'Aktuálně'
+    input_text = 'Změnit'
 
 
 class DateInput(forms.DateInput):
@@ -39,3 +46,11 @@ class ProfileForm(ModelForm):
 class AllUsersForm(ModelForm):
     model = User
     fields = ['full_name', 'birthdate', 'phone_number', 'mail', 'user_verification', 'user_name', 'password', 'role_id', 'last login', 'date_joined', 'is_active', 'is_staff', 'is_superuser']
+    full_name = forms.CharField(label="Celé jméno")
+    phone_number = forms.CharField(label="Telefon")
+    mail = forms.CharField(required=False, label="Email")
+    profile_picture = forms.ImageField(required=False, label="Profilová fotografie", widget=MyClearableFileInput(attrs={'name': 'btn'}))
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'phone_number', 'mail', 'profile_picture']

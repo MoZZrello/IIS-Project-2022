@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2022 at 03:54 PM
+-- Generation Time: Oct 20, 2022 at 06:10 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -248,7 +248,14 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (21, 'IISapp', '0001_initial', '2022-10-12 18:14:12.985941'),
 (22, 'IISapp', '0002_remove_record_record_end_remove_record_record_start_and_more', '2022-10-12 19:07:19.115678'),
 (23, 'IISapp', '0003_rename_phone_numb_user_phone_number_user_last_login', '2022-10-12 21:12:53.140595'),
-(24, 'IISapp', '0004_alter_user_options_alter_user_managers_and_more', '2022-10-18 12:22:00.047520');
+(24, 'IISapp', '0004_alter_user_options_alter_user_managers_and_more', '2022-10-18 12:22:00.047520'),
+(25, 'IISapp', '0005_outing_reservation_outing_assigned', '2022-10-18 14:18:15.050885'),
+(26, 'IISapp', '0006_user_profile_picture', '2022-10-20 10:27:07.467151'),
+(27, 'IISapp', '0007_alter_animal_image_alter_user_profile_picture', '2022-10-20 10:29:37.056086'),
+(28, 'IISapp', '0008_alter_animal_image_alter_user_profile_picture', '2022-10-20 10:30:29.469343'),
+(29, 'IISapp', '0009_alter_user_profile_picture', '2022-10-20 14:43:37.933142'),
+(30, 'IISapp', '0010_alter_user_profile_picture', '2022-10-20 14:55:28.985841'),
+(31, 'IISapp', '0011_alter_user_profile_picture', '2022-10-20 15:31:49.681807');
 
 -- --------------------------------------------------------
 
@@ -261,13 +268,6 @@ CREATE TABLE `django_session` (
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `django_session`
---
-
-INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('jo3wtwkqgy3079q32cxzn78owkouvbkh', '.eJxVjEEOwiAQRe_C2hDAOoBL956BzDCDVA1NSrsy3l2bdKHb_977L5VwXWpau8xpZHVWoA6_G2F-SNsA37HdJp2ntswj6U3RO-36OrE8L7v7d1Cx128dSjRCUiK74EVcsJ5iBsCcPYXBOIcQToTxCM4LcDRMbJ1BZrRDKer9Af0OOKE:1oklp8:WsZs3mMgeBMgUSsh5pxIWV5ReLuAlWbYAcmr2KdwSwk', '2022-11-01 12:35:58.169923');
 
 -- --------------------------------------------------------
 
@@ -308,16 +308,20 @@ CREATE TABLE `iisapp_outing_reservation` (
   `outing_end` datetime(6) NOT NULL,
   `outing_verification` tinyint(1) NOT NULL,
   `animal_id` bigint(20) NOT NULL,
-  `user_name_id` bigint(20) NOT NULL
+  `user_name_id` bigint(20) NOT NULL,
+  `outing_assigned` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `iisapp_outing_reservation`
 --
 
-INSERT INTO `iisapp_outing_reservation` (`id`, `outing_start`, `outing_end`, `outing_verification`, `animal_id`, `user_name_id`) VALUES
-(1, '2022-11-02 08:00:00.000000', '2022-11-02 09:00:00.000000', 0, 1, 4),
-(2, '2022-11-06 10:00:00.000000', '2022-11-06 11:30:00.000000', 1, 2, 4);
+INSERT INTO `iisapp_outing_reservation` (`id`, `outing_start`, `outing_end`, `outing_verification`, `animal_id`, `user_name_id`, `outing_assigned`) VALUES
+(3, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 1, 1, 6, 1),
+(4, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, 3, 1),
+(6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 1, 2, 6, 1),
+(7, '2021-11-06 08:00:00.000000', '2021-11-06 08:30:00.000000', 1, 1, 6, 1),
+(8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 1, 1, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -389,20 +393,21 @@ CREATE TABLE `iisapp_user` (
   `is_active` tinyint(1) NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `last_name` varchar(150) NOT NULL
+  `last_name` varchar(150) NOT NULL,
+  `profile_picture` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `iisapp_user`
 --
 
-INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail`, `user_verification`, `user_name`, `password`, `role_id`, `last_login`, `date_joined`, `email`, `first_name`, `is_active`, `is_staff`, `is_superuser`, `last_name`) VALUES
-(1, 'Tester Admin', '2000-10-01', '774999555', 'tester@test.com', 1, 'admintester', 'test123', 1, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
-(2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
-(3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
-(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
-(5, 'Richard Tester', '2003-02-05', '+421917993833', 'test@gmail.com', 0, 'tester_reg', 'pbkdf2_sha256$390000$vWOW5qO6qITHjVIEk614KL$cjXStBkQ45Z+4lOJwOoWqqiEKbaXeaidQHgfiv3TAvs=', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, ''),
-(6, 'Tester Registrace', '2006-01-26', '+12125552368', 'test@test.com', 0, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-18 12:35:58.166912', '2022-10-18 12:27:36.627011', '', '', 1, 0, 0, '');
+INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail`, `user_verification`, `user_name`, `password`, `role_id`, `last_login`, `date_joined`, `email`, `first_name`, `is_active`, `is_staff`, `is_superuser`, `last_name`, `profile_picture`) VALUES
+(2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
+(3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
+(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
+(6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-20 16:01:27.691838', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
+(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-20 15:55:24.311604', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
+(8, 'Admin Tester', '2000-11-02', '+421907777888', 'test@test.com', 1, 'admin', 'pbkdf2_sha256$390000$Sfx8EUo4d45eSiNwU73jJS$7LCninn1Jku+eiFwDjQBMTlQFnuOdV7mVx1dpojt0kM=', 1, '2022-10-20 09:49:27.689744', '2022-10-20 09:49:22.160002', '', '', 1, 0, 0, '', 'profile_pic_default.jpg');
 
 -- --------------------------------------------------------
 
@@ -655,7 +660,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `iisapp_animal`
@@ -667,7 +672,7 @@ ALTER TABLE `iisapp_animal`
 -- AUTO_INCREMENT for table `iisapp_outing_reservation`
 --
 ALTER TABLE `iisapp_outing_reservation`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `iisapp_record`
@@ -685,7 +690,7 @@ ALTER TABLE `iisapp_requests`
 -- AUTO_INCREMENT for table `iisapp_user`
 --
 ALTER TABLE `iisapp_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user_groups`
