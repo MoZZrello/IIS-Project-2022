@@ -12,6 +12,6 @@ urlpatterns = [
     path('walk/create/', views.create_walk, name="create_walk"),
     path('walk/dashboard/', views.walks_dashboard, name="walks_dashboard"),
     path('walk/update/<str:pk>/', views.update_walk, name="update_walk"),
-    path('walk/delete/<str:pk>/', views.delete_walk, name="delete_walk")
-
+    path('walk/delete/<str:pk>/', views.delete_walk, name="delete_walk"),
+    path('admin_site/', views.admin_site, name="admin_site")
 ] 

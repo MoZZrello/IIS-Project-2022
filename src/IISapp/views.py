@@ -1,3 +1,4 @@
+from django.forms import modelformset_factory
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.template import loader
@@ -76,7 +77,8 @@ def register_page(request):
 @allowed_users(allowed_roles=['Dobrovolník', 'Veterinář', 'Pečovatel'])
 def user_profile(request):
     walks = outing_reservation.objects.filter(user_name=request.user.id)
-    walks_active = outing_reservation.objects.filter(user_name=request.user.id, outing_start__gte=datetime.datetime.now())
+    walks_active = outing_reservation.objects.filter(user_name=request.user.id,
+                                                     outing_start__gte=datetime.datetime.now())
 
     context = {'walks': walks, 'walks_active': walks_active}
     return render(request, 'profil.html', context)
@@ -128,6 +130,16 @@ def delete_walk(request, pk):
 
 @allowed_users(allowed_roles=['Pečovatel'])
 def walks_dashboard(request):
-    reservations = outing_reservation.objects.all()
-    context = {'reservations': reservations}
+    user = User.objects.all()
+    context = {'user': user}
     return render(request, 'walks_dashboard.html', context)
+
+
+# @login_required(login_url='login')
+# @allowed_users(allowed_roles=['Administrátor'])
+def admin_site(request):
+    users = User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=users)
+    users = user_filter.qs
+    context = {'users': users, 'user_filter': user_filter}
+    return render(request, 'admin_site.html', context)
