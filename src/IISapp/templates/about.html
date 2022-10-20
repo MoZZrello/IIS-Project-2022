@@ -4,7 +4,17 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-<!-- <img class="img-fluid mb-3 mb-lg-0" src="{% static 'theme/assets/img/bg-masthead.jpg' %}" alt="..." /> -->
+
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+</style>
+
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 <section class="bg-light" id="projects" style="padding-top: 30px; padding-bottom:30px; background-color: whitesmoke !important;">
     <div class="container px-4 px-lg-5">
@@ -19,10 +29,15 @@
         </div>
 
 
-<div class="row">
+<div class="row" style="margin-bottom: 20px;">
     <div class="col">
         <form method="GET">
-            {{myFilter.form}}
+            {% for field in myFilter.form %}
+                <div style="display: inline-block;">
+                    {{ field.errors }}
+                    {{ field.label_tag }} {{ field }}
+                </div>
+            {% endfor %}
             <button class="btn btn-primary" type="submit">Filtrovat</button>
         </form>
     </div>
