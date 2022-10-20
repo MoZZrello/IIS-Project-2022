@@ -141,8 +141,8 @@ def walks_dashboard(request):
     return render(request, 'walks_dashboard.html', context)
 
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['Administrátor'])
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
 def admin_site(request):
     users = User.objects.all()
     user_filter = UserFilter(request.GET, queryset=users)
