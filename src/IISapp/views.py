@@ -78,7 +78,7 @@ def user_profile(request):
     user = request.user
     form = ProfileForm(instance=user)
 
-    walks = outing_reservation.objects.filter(user_name=request.user.id)
+    walks = outing_reservation.objects.filter(user_name=request.user.id, outing_start__lt=datetime.datetime.now())
     walks_active = outing_reservation.objects.filter(user_name=request.user.id, outing_start__gte=datetime.datetime.now())
 
     if request.method == 'POST':
