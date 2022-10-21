@@ -147,14 +147,14 @@ def walks_dashboard(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Dobrovolník'])
 def assign_walk(request, resid, name):
-    outing_reservation.objects.filter(id=resid).update(user_name=name)
+    outing_reservation.objects.filter(id=resid).update(user_name=name, outing_verification=False)
     return redirect('reservation')
 
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Dobrovolník'])
 def unassign_walk(request, resid):
-    outing_reservation.objects.filter(id=resid).update(user_name=None)
+    outing_reservation.objects.filter(id=resid).update(user_name=None, outing_verification=False)
     return redirect('reservation')
 
 
