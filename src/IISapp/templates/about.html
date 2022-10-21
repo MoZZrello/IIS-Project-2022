@@ -6,12 +6,11 @@
 {% block content %}
 
 <style>
-    .wrapper {
-        display: grid;
-        grid-template-columns: 78% 22%;
-        grid-template-rows: 50px;
-        grid-column-gap: 5px; /* will contain if #first is longer than #second */
-        align-content: center;
+    .profile_pic {
+        max-width: 50px;
+        max-height: 50px;
+        margin: 0 auto;
+        border-radius: 50%;
     }
 </style>
 
@@ -49,20 +48,20 @@
         </div>
         <div class="card card-body">
             <table class="table">
+                <th></th>
                 <th>Jméno</th>
                 <th>Druh</th>
                 <th>Rasa</th>
                 <th>Věk</th>
                 <th>Dátum odchycení</th>
-                <th>Obrázek</th>
-                {% for i in animals %}
+                {% for animal in animals %}
                     <tr>
-                        <td>{{i.animal_name}}</td>
-                        <td>{{i.species}}</td>
-                        <td>{{i.breed}}</td>
-                        <td>{{i.age}}</td>
-                        <td>{{i.capture_date|date:"d.n.Y"}}</td>
-                        <td>{{i.image}}</td>
+                        <td><img class="profile_pic" src="{% if animal.image %}{{ animal.image.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
+                        <td>{{animal.animal_name}}</td>
+                        <td>{{animal.species}}</td>
+                        <td>{{animal.breed}}</td>
+                        <td>{{animal.age}}</td>
+                        <td>{{animal.capture_date|date:"d.n.Y"}}</td>
                     </tr>
 
                 {% endfor %}
