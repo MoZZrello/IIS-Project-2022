@@ -5,6 +5,7 @@
 {% url 'logout' as logout_url %}
 {% url 'profil' as profile_url %}
 {% url 'admin_site' as admin_url %}
+{% url 'reservation' as reservation_url %}
 {% load static %}
 
 <nav class="navbar navbar-expand-lg hs-bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -35,6 +36,10 @@
                 {% endif %}
 
                 {% if user.is_authenticated %}
+                    {% if user.role.id == 4 %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ reservation_url }}">Rezervace procházek</a></li>
+                    {% endif %}
+
                     {% if user.role.id == 2 %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ walks_url }}">Procházky</a></li>
                     {% endif %}

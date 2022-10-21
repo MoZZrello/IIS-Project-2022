@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Seznam rezervací{% endblock %}
+
+{% block content %}
+
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px;
+        align-content: center;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 70%">
+    <div class="col-md">
+        <h2 style="padding: 20px">Volné procházky</h2>
+        <div class="card card-body">
+            <table class="table">
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th></th>
+                {% for i in not_assigned_reservations %}
+                    <tr>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
+                        <td><a href="assign/{{i.id}}/{{user.id}}/">Rezervovat</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 70%; padding-bottom: 30px">
+    <div class="col-md">
+        <h2 style="padding: 20px">Rezervované procházky</h2>
+        <div class="card card-body">
+            <table class="table">
+                <th>Dobrovolník</th>
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th>Potvrzeno</th>
+                <th></th>
+                {% for i in assigned_reservations %}
+                    <tr>
+                        <td>{{i.user_name}}</td>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
+                        <td>{{ i.outing_verification|yesno:"Ano,Ne" }}</td>
+                        <td><a href="unassign/{{i.id}}/">Zrušit rezervaci</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,19 +1,21 @@
 from django.forms import modelformset_factory
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 import datetime
+from calendar import HTMLCalendar
 
 from .decorators import *
 from .forms import *
-from .models import *
 from .filters import *
+from .random_functions import *
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -140,6 +142,31 @@ def walks_dashboard(request):
     reservations = outing_reservation.objects.all()
     context = {'user': user, 'reservations': reservations}
     return render(request, 'walks_dashboard.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Dobrovolník'])
+def assign_walk(request, resid, name):
+    outing_reservation.objects.filter(id=resid).update(user_name=name)
+    return redirect('reservation')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Dobrovolník'])
+def unassign_walk(request, resid):
+    outing_reservation.objects.filter(id=resid).update(user_name=None)
+    return redirect('reservation')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Dobrovolník'])
+def reservation(request):
+    user = request.user
+    not_assigned_reservations = outing_reservation.objects.filter(user_name__isnull=True, outing_start__gte=datetime.datetime.now())
+    assigned_reservations = outing_reservation.objects.filter(user_name=user.id, outing_start__gte=datetime.datetime.now())
+
+    context = {'user': user, 'not_assigned_reservations': not_assigned_reservations, 'assigned_reservations': assigned_reservations}
+    return render(request, 'walks_reservations.html', context)
 
 
 @login_required(login_url='login')

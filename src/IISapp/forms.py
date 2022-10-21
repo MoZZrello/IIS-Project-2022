@@ -60,3 +60,4 @@ class AllUsersForm(ModelForm):
     class Meta:
         model = User
         fields = ['full_name', 'phone_number', 'mail', 'profile_picture']
+

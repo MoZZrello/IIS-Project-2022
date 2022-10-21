@@ -71,7 +71,7 @@ class Animal(models.Model):
 
 
 class outing_reservation(models.Model):
-    user_name = models.ForeignKey(User, on_delete=CASCADE)
+    user_name = models.ForeignKey(User, on_delete=CASCADE, blank=True, null=True)
     animal = models.ForeignKey(Animal, on_delete=CASCADE)
     outing_start = models.DateTimeField()
     outing_end = models.DateTimeField(blank=True)
