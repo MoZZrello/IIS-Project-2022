@@ -64,7 +64,7 @@ class Animal(models.Model):
     breed = models.CharField(max_length=255, blank=True)
     age = models.SmallIntegerField()
     animal_description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='static/img', default='profile_pic_default.jpg')
+    image = models.ImageField(upload_to='static/img', blank=True, null=True)
     capture_date = models.DateField()
     outing_suitable = models.BooleanField()
     animal_verification = models.BooleanField()

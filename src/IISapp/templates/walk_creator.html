@@ -4,22 +4,18 @@
 {% block title %}Vytvoření procházek{% endblock %}
 
 {% block content %}
-<style>
-    .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
-</style>
 
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 <div class="">
     <form action="" method="POST">
         {% csrf_token %}
-        {{form}}
+        {% for field in form %}
+                    <div style="display: block; margin: 10px">
+                        {{ field.errors }}
+                        <div style="width: 20%; display: inline-block; vertical-align: top !important;" >{{ field.label_tag }}</div>
+                        <div style="width: 75%; display: inline-block">{{ field }}</div>
+                    </div>
+        {% endfor %}
         <input type="submit" name="Submit" value="Vytvořit">
     </form>
 </div>

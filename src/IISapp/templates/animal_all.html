@@ -5,6 +5,60 @@
 
 {% block content %}
 
-<h3>Procházky</h3>
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px;
+        align-content: center;
+    }
+    .profile_pic {
+        max-width: 50px;
+        max-height: 50px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Všechny zvířátka</div>
+            <div><a class="btn btn-sm btn-info" href="{% url 'add_animals' %}" style="background-color: forestgreen;color: white;">Přidat zvíře</a></div>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th></th>
+                <th>Jméno</th>
+                <th>Druh</th>
+                <th>Rasa</th>
+                <th>Věk</th>
+                <th>Popis</th>
+                <th>Datum odchycení</th>
+                <th>Vhodný na venčení</th>
+                <th>Adoptovaný</th>
+                <th></th>
+                <th></th>
+                {% for animal in animals %}
+                    <tr>
+                        <td><img class="profile_pic" src="{% if animal.image %}{{ animal.image.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
+                        <td>{{animal.animal_name}}</td>
+                        <td>{{animal.species}}</td>
+                        <td>{{animal.breed}}</td>
+                        <td>{{animal.age}}</td>
+                        <td>{{animal.animal_description}}</td>
+                        <td>{{animal.capture_date|date:"d.n.Y"}}</td>
+                        <td>{{animal.outing_suitable|yesno:"Ano,Ne" }}</td>
+                        <td>{{animal.animal_verification|yesno:"Ano,Ne" }}</td>
+                        <td><a href="{% url 'update_animals' animal.id %}">Upravit</a></td>
+                        <td><a href="{% url 'delete_animals' animal.id %}">Odstránit</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

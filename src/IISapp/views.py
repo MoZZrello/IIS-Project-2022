@@ -170,6 +170,58 @@ def reservation(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def all_animals(request):
+    user = request.user
+    animals = Animal.objects.all()
+    context = {'user': user, 'animals': animals}
+    return render(request, 'animal_all.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def add_animals(request):
+    form = CreateAnimalForm()
+
+    if request.method == 'POST':
+        form = CreateAnimalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('all_animals')
+
+    context = {'form': form}
+    return render(request, 'animal_add.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def update_animals(request, pk):
+    animal = Animal.objects.get(id=pk)
+    form = CreateAnimalForm(instance=animal)
+
+    if request.method == 'POST':
+        form = CreateAnimalForm(request.POST, request.FILES, instance=animal)
+        if form.is_valid():
+            form.save()
+            return redirect('all_animals')
+
+    context = {'form': form}
+    return render(request, 'animal_add.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def delete_animals(request, pk):
+    animal = Animal.objects.get(id=pk)
+    if request.method == 'POST':
+        animal.delete()
+        return redirect('all_animals')
+
+    context = {'animal': animal}
+    return render(request, 'animal_delete.html', context)
+
+
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['Administrátor'])
 def admin_site(request):
     users = User.objects.all()

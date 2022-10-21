@@ -37,6 +37,22 @@ class CreateWalkForm(ModelForm):
         fields = '__all__'
 
 
+class CreateAnimalForm(ModelForm):
+    capture_date = forms.DateField(
+        widget=forms.DateInput(format='%d.%m.%Y'),
+        input_formats=['%d.%m.%Y']
+    )
+    image = forms.ImageField(
+        required=False,
+        label="Fotografie",
+        widget=MyClearableFileInput(attrs={'name': 'btn'})
+    )
+
+    class Meta:
+        model = Animal
+        fields = '__all__'
+
+
 class ProfileForm(ModelForm):
     full_name = forms.CharField(label="Celé jméno")
     phone_number = forms.CharField(label="Telefon")

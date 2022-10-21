@@ -16,5 +16,9 @@ urlpatterns = [
     path('walk/reservation/assign/<int:resid>/<int:name>/', views.assign_walk, name="assign_walk"),
     path('walk/reservation/unassign/<int:resid>/', views.unassign_walk, name="unassign_walk"),
     path('walk/reservation/', views.reservation, name="reservation"),
+    path('animal/all/', views.all_animals, name="all_animals"),
+    path('animal/add/', views.add_animals, name="add_animals"),
+    path('animal/update/<str:pk>/', views.update_animals, name="update_animals"),
+    path('animal/delete/<str:pk>/', views.delete_animals, name="delete_animals"),
     path('admin_site/', views.admin_site, name="admin_site"),
 ] 

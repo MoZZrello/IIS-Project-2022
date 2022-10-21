@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2022 at 06:10 PM
+-- Generation Time: Oct 21, 2022 at 10:13 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -255,7 +255,11 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (28, 'IISapp', '0008_alter_animal_image_alter_user_profile_picture', '2022-10-20 10:30:29.469343'),
 (29, 'IISapp', '0009_alter_user_profile_picture', '2022-10-20 14:43:37.933142'),
 (30, 'IISapp', '0010_alter_user_profile_picture', '2022-10-20 14:55:28.985841'),
-(31, 'IISapp', '0011_alter_user_profile_picture', '2022-10-20 15:31:49.681807');
+(31, 'IISapp', '0011_alter_user_profile_picture', '2022-10-20 15:31:49.681807'),
+(32, 'IISapp', '0012_alter_outing_reservation_user_name', '2022-10-21 15:03:22.098352'),
+(33, 'IISapp', '0013_alter_outing_reservation_user_name', '2022-10-21 15:04:41.649187'),
+(34, 'IISapp', '0014_alter_animal_image', '2022-10-21 19:27:27.336196'),
+(35, 'IISapp', '0015_alter_animal_image', '2022-10-21 19:59:46.495702');
 
 -- --------------------------------------------------------
 
@@ -268,6 +272,13 @@ CREATE TABLE `django_session` (
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `django_session`
+--
+
+INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('yvwcqeitndet80h7q8rmspidrv5ea1j7', '.eJxVjDsOwjAQRO_iGlnxR96Ykp4zWGvvgAMolvKpEHcnkVJAOfPezFslXpea1hlTGkSdFanTb5e5PDHuQB483psubVymIetd0Qed9bUJXpfD_TuoPNdtbanrUOTWw_ngGEDuxdjQW-Jog7EdTBGbJcKBgyFPbCJtARBPRX2-8ig4aA:1olxWk:-o1BlpBlIpvSYR6ZSieYUcXOwCFb6G2cb4P_4D0u1FQ', '2022-11-04 19:17:54.109602');
 
 -- --------------------------------------------------------
 
@@ -282,7 +293,7 @@ CREATE TABLE `iisapp_animal` (
   `breed` varchar(255) NOT NULL,
   `age` smallint(6) NOT NULL,
   `animal_description` longtext NOT NULL,
-  `image` varchar(100) NOT NULL,
+  `image` varchar(100) DEFAULT NULL,
   `capture_date` date NOT NULL,
   `outing_suitable` tinyint(1) NOT NULL,
   `animal_verification` tinyint(1) NOT NULL
@@ -293,8 +304,9 @@ CREATE TABLE `iisapp_animal` (
 --
 
 INSERT INTO `iisapp_animal` (`id`, `animal_name`, `species`, `breed`, `age`, `animal_description`, `image`, `capture_date`, `outing_suitable`, `animal_verification`) VALUES
-(1, 'Marco', 'Pes', 'Chihuahua', 2, 'Velice společenský a přátelský (někdy kouše, ale on to tak nemyslí). Vhodný do mafiánských rodin a na mučení lidí.', 'N/A', '2021-10-06', 1, 1),
-(2, 'Al Pacachino', 'Alpaca', 'N/A', 3, 'Vhodná na vyrobení svetru, možná i zimní čepice.', 'N/A', '2021-11-25', 1, 1);
+(1, 'Marco', 'Pes', 'Labrador', 3, 'Velice společenský a přátelský (někdy kouše, ale on to tak nemyslí). Vhodný do mafiánských rodin a na mučení lidí.', 'static/img/chihuahua.jpg', '2021-10-06', 1, 1),
+(2, 'Al Pacachino', 'Alpaca', '', 4, 'Vhodná na vyrobení svetru, možná i zimní čepice.', 'static/img/alpaca.jpg', '2021-11-26', 1, 0),
+(3, 'Macho', 'Pes', 'Bulldog', 4, 'Miluje se oblizovat.', '', '2022-11-08', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -308,7 +320,7 @@ CREATE TABLE `iisapp_outing_reservation` (
   `outing_end` datetime(6) NOT NULL,
   `outing_verification` tinyint(1) NOT NULL,
   `animal_id` bigint(20) NOT NULL,
-  `user_name_id` bigint(20) NOT NULL,
+  `user_name_id` bigint(20) DEFAULT NULL,
   `outing_assigned` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -319,9 +331,10 @@ CREATE TABLE `iisapp_outing_reservation` (
 INSERT INTO `iisapp_outing_reservation` (`id`, `outing_start`, `outing_end`, `outing_verification`, `animal_id`, `user_name_id`, `outing_assigned`) VALUES
 (3, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 1, 1, 6, 1),
 (4, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, 3, 1),
-(6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 1, 2, 6, 1),
+(6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 0, 2, 6, 1),
 (7, '2021-11-06 08:00:00.000000', '2021-11-06 08:30:00.000000', 1, 1, 6, 1),
-(8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 1, 1, 6, 1);
+(8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 1, 6, 1),
+(9, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -405,8 +418,8 @@ INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail
 (2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
 (3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
 (4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
-(6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-20 16:01:27.691838', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
-(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-20 15:55:24.311604', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
+(6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-21 15:06:12.668415', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
+(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-21 19:17:54.106606', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
 (8, 'Admin Tester', '2000-11-02', '+421907777888', 'test@test.com', 1, 'admin', 'pbkdf2_sha256$390000$Sfx8EUo4d45eSiNwU73jJS$7LCninn1Jku+eiFwDjQBMTlQFnuOdV7mVx1dpojt0kM=', 1, '2022-10-20 09:49:27.689744', '2022-10-20 09:49:22.160002', '', '', 1, 0, 0, '', 'profile_pic_default.jpg');
 
 -- --------------------------------------------------------
@@ -660,19 +673,19 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `iisapp_animal`
 --
 ALTER TABLE `iisapp_animal`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `iisapp_outing_reservation`
 --
 ALTER TABLE `iisapp_outing_reservation`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `iisapp_record`

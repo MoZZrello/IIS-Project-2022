@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<p>Skutečně chcete odstránit "Zvířátko {{animal.animal_name}}"?</p>
+
+<form action="{% url 'delete_animals' animal.id %}" method="POST">
+    {% csrf_token %}
+
+    <a href="{% url 'all_animals' %}">Zrušit<</a>
+    <input type="submit" name="Odstránit">
+</form>
+
+{% endblock %}
