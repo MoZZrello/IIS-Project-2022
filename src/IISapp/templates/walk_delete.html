@@ -4,14 +4,15 @@
 {% block content %}
 
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+<div style="margin: auto; width: 70%; text-align: center; height: 819px">
+    <p style="padding-top: 350px">Naozaj chcete odstrániť "Procházku {{walk.id}}"?</p>
 
-<p>Naozaj chcete odstrániť "Procházku {{walk.id}}"?</p>
+    <form action="{% url 'delete_walk' walk.id %}" method="POST">
+        {% csrf_token %}
 
-<form action="{% url 'delete_walk' walk.id %}" method="POST">
-    {% csrf_token %}
-
-    <a href="{% url 'walks_dashboard' %}">Zrušit<</a>
-    <input type="submit" name="Odstránit">
-</form>
+        <a href="{% url 'walks_dashboard' %}">Zrušit</a>
+        <input type="submit" name="Odstránit">
+    </form>
+</div>
 
 {% endblock %}

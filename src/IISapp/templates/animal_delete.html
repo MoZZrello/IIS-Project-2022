@@ -5,13 +5,15 @@
 
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 
-<p>Skutečně chcete odstránit "Zvířátko {{animal.animal_name}}"?</p>
+<div style="margin: auto; width: 70%; text-align: center; height: 819px">
+    <p style="padding-top: 350px">Skutečně chcete odstránit "Zvířátko {{animal.animal_name}}"?</p>
 
-<form action="{% url 'delete_animals' animal.id %}" method="POST">
-    {% csrf_token %}
+    <form action="{% url 'delete_animals' animal.id %}" method="POST">
+        {% csrf_token %}
 
-    <a href="{% url 'all_animals' %}">Zrušit<</a>
-    <input type="submit" name="Odstránit">
-</form>
+        <a href="{% url 'all_animals' %}">Zrušit<</a>
+        <input type="submit" name="Odstránit">
+    </form>
+</div>
 
 {% endblock %}
