@@ -1,10 +1,94 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Seznam dobrovolníku{% endblock %}
+{% block title %}Verifikace{% endblock %}
 
 {% block content %}
 
-<h3>Dobrovolníci</h3>
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 80% 20%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+    .profile_pic {
+        max-width: 50px;
+        max-height: 50px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 70%">
+    <div class="col-md">
+        <div class="wrapper" style="padding: 20px">
+            <h2>Dobrovolníci čekající na ověření</h2>
+            <h2>{% if unverify_counter > 0 %}(Spolu {{ unverify_counter }}){% endif %}</h2>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th></th>
+                <th>Přezívka</th>
+                <th>Jméno</th>
+                <th>Datum narození</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Verifikace</th>
+                <th></th>
+                {% for volunteer in unverified_volunteers %}
+                    <tr>
+                        <td><img class="profile_pic" src="{% if volunteer.profile_picture %}{{volunteer.profile_picture.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
+                        <td>{{volunteer.user_name}}</td>
+                        <td>{{volunteer.full_name}}</td>
+                        <td>{{volunteer.birthdate|date:"d.n.Y"}}</td>
+                        <td>{{volunteer.phone_number}}</td>
+                        <td>{{volunteer.mail}}</td>
+                        <td>{{volunteer.user_verification|yesno:"Ano,Ne" }}</td>
+                        <td><a href="verify/{{volunteer.id}}/">Verifikovat</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 70%; padding-bottom: 30px">
+    <div class="col-md">
+        <div class="wrapper" style="padding: 20px">
+            <h2 style="padding: 20px">Verifikovaní dobrovolníci</h2>
+            <h2>{% if verify_counter > 0 %}(Spolu {{ verify_counter }}){% endif %}</h2>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th></th>
+                <th>Přezívka</th>
+                <th>Jméno</th>
+                <th>Datum narození</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Verifikace</th>
+                <th></th>
+                {% for volunteer in verified_volunteers %}
+                    <tr>
+                        <td><img class="profile_pic" src="{% if volunteer.profile_picture %}{{volunteer.profile_picture.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
+                        <td>{{volunteer.user_name}}</td>
+                        <td>{{volunteer.full_name}}</td>
+                        <td>{{volunteer.birthdate|date:"d.n.Y"}}</td>
+                        <td>{{volunteer.phone_number}}</td>
+                        <td>{{volunteer.mail}}</td>
+                        <td>{{volunteer.user_verification|yesno:"Ano,Ne" }}</td>
+                        <td><a href="unverify/{{volunteer.id}}/">Zrušit verifikaci</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

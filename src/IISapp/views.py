@@ -146,6 +146,17 @@ def walks_dashboard(request):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Dobrovolník'])
+def reservation(request):
+    user = request.user
+    not_assigned_reservations = outing_reservation.objects.filter(user_name__isnull=True, outing_start__gte=datetime.datetime.now())
+    assigned_reservations = outing_reservation.objects.filter(user_name=user.id, outing_start__gte=datetime.datetime.now())
+
+    context = {'user': user, 'not_assigned_reservations': not_assigned_reservations, 'assigned_reservations': assigned_reservations}
+    return render(request, 'walks_reservations.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Dobrovolník'])
 def assign_walk(request, resid, name):
     outing_reservation.objects.filter(id=resid).update(user_name=name, outing_verification=False)
     return redirect('reservation')
@@ -156,17 +167,6 @@ def assign_walk(request, resid, name):
 def unassign_walk(request, resid):
     outing_reservation.objects.filter(id=resid).update(user_name=None, outing_verification=False)
     return redirect('reservation')
-
-
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Dobrovolník'])
-def reservation(request):
-    user = request.user
-    not_assigned_reservations = outing_reservation.objects.filter(user_name__isnull=True, outing_start__gte=datetime.datetime.now())
-    assigned_reservations = outing_reservation.objects.filter(user_name=user.id, outing_start__gte=datetime.datetime.now())
-
-    context = {'user': user, 'not_assigned_reservations': not_assigned_reservations, 'assigned_reservations': assigned_reservations}
-    return render(request, 'walks_reservations.html', context)
 
 
 @login_required(login_url='login')
@@ -219,6 +219,33 @@ def delete_animals(request, pk):
 
     context = {'animal': animal}
     return render(request, 'animal_delete.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def volunteer_verification(request):
+    unverified_volunteers = User.objects.filter(role=4, user_verification=False)
+    verified_volunteers = User.objects.filter(role=4, user_verification=True)
+
+    unverify_counter = unverified_volunteers.count()
+    verify_counter = verified_volunteers.count()
+
+    context = {'verify_counter': verify_counter, 'unverify_counter': unverify_counter, 'unverified_volunteers': unverified_volunteers, 'verified_volunteers': verified_volunteers}
+    return render(request, 'volunteer_verification.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def verify_volunteer(request, userid):
+    User.objects.filter(id=userid).update(user_verification=1)
+    return redirect('volunteer_verification')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def unverify_volunteer(request, userid):
+    User.objects.filter(id=userid).update(user_verification=0)
+    return redirect('volunteer_verification')
 
 
 @login_required(login_url='login')
