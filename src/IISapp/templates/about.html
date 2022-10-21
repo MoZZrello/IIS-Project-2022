@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-<!-- {% load static %} -->
+{% load static %}
 
 {% block title %}About{% endblock %}
 
@@ -57,7 +57,7 @@
                 {% for animal in animals %}
                     <tr>
                         <td><img class="profile_pic" src="{% if animal.image %}{{ animal.image.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
-                        <td>{{animal.animal_name}}</td>
+                        <td><a href="{% url 'all_animals' %}{{animal.id}}/">{{animal.animal_name}}</a></td>
                         <td>{{animal.species}}</td>
                         <td>{{animal.breed}}</td>
                         <td>{{animal.age}}</td>
@@ -69,38 +69,5 @@
         </div>
     </div>
 </div>
-
-
-<!--<div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-    <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/dog.jpg' %}" alt="..." /></div>
-    <div class="col-lg-6">
-        <div class="bg-black text-center h-100 project">
-            <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-left">
-                    <h4 class="text-white">Rocky</h4>
-                    <p class="mb-0 text-white-50">nejaky random popis</p>
-                    <hr class="d-none d-lg-block mb-0 ms-0" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row gx-0 justify-content-center">
-    <div class="col-lg-6"><img class="img-fluid" src="{% static 'theme/assets/img/dog2.jpg' %}" alt="..." /></div>
-    <div class="col-lg-6 order-lg-first">
-        <div class="bg-black text-center h-100 project">
-            <div class="d-flex h-100">
-                <div class="project-text w-100 my-auto text-center text-lg-right">
-                    <h4 class="text-white">Lucky</h4>
-                    <p class="mb-0 text-white-50">nejaky random popis</p>
-                    <hr class="d-none d-lg-block mb-0 me-0" />
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</section>-->
 
 {% endblock %}

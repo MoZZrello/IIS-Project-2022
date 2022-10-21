@@ -1,21 +1,16 @@
-from django.forms import modelformset_factory
-from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.template import loader
+from django.http import HttpRequest
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
+from django.db.models import Q
 
 import datetime
-from calendar import HTMLCalendar
 
 from .decorators import *
 from .forms import *
 from .filters import *
-from .random_functions import *
+from .models import *
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -32,10 +27,18 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, 'about.html', context)
 
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Dobrovolník', 'Veterinář', 'Pečovatel'])
-def contact(request: HttpRequest) -> HttpResponse:
-    return render(request, 'contact.html')
+def animal_profile(request, animalid):
+    user = request.user
+    animal = Animal.objects.get(id=animalid)
+
+    record = Record.objects.filter(animal=animal).exclude(record_type="Zdravotní záznam")
+    healt_records = Record.objects.filter(animal=animal, record_type="Zdravotní záznam")
+
+    record_count = record.count()
+    health_record_count = healt_records.count()
+
+    context = {'animal': animal, 'user': user, 'healt_records': healt_records, 'record': record, 'record_count': record_count, 'health_record_count': health_record_count}
+    return render(request, 'animal_page.html', context)
 
 
 @unauthenticated_user

@@ -1,10 +1,125 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Profil zvířete{% endblock %}
+{% block title %}Profil zvířátka{% endblock %}
 
 {% block content %}
 
-<h3>Zvíře</h3>
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+    .profile_pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+    #id_full_name, #id_phone_number, #id_mail {
+        width: 100%;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 
+<div class="row" style="padding-bottom: 10px">
+    <div class="col-md-3">
+        <div class="card card-body">
+            <a class="btn btn-warning" href="{% url 'index' %}">&#8592; Spátky</a>
+            <hr>
+            <h3 style="text-align: center">Profil zvířátka</h3>
+            <h1 style="text-align: center">{{animal.animal_name}}</h1>
+            <hr>
+            <img class="profile_pic" src="{% if animal.image %}{{ animal.image.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}">
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card card-body" style="margin-right: 30px; margin-top: 32px">
+            <table class="table">
+                <th>Druh</th>
+                <th>Rasa</th>
+                <th>Věk</th>
+                <th>Datum odchycení</th>
+                <th>Vhodný na venčení</th>
+                <th>Adoptovaný</th>
+                    <tr>
+                        <td>{{animal.species}}</td>
+                        <td>{{animal.breed}}</td>
+                        <td>{{animal.age}}</td>
+                        <td>{{animal.capture_date|date:"d.n.Y"}}</td>
+                        <td>{{animal.outing_suitable|yesno:"Ano,Ne" }}</td>
+                        <td>{{animal.animal_verification|yesno:"Ano,Ne" }}</td>
+                    </tr>
+            </table>
+            <div style="padding: 10px"></div>
+            <table class="table">
+                <th>Popis</th>
+                    <tr>
+                        <td>{{animal.animal_description}}</td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 20px; padding-bottom: 30px; margin: auto; width: 70%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Záznamy</div>
+        </div>
+        {% if record_count > 0 %}
+            <div class="card card-body">
+                <table class="table">
+                    <th>Název</th>
+                    <th>Typ záznamu</th>
+                    <th>Popis</th>
+                    {% for i in record %}
+                        <tr>
+                            <td>{{i.record_name}}</td>
+                            <td>{{i.record_type}}</td>
+                            <td>{{i.record_description}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+        <div class="card card-body">
+            <h4 style="text-align: center">Žádné záznamy k tomuto zvířátku nemáme.</h4>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if user.role.id == 2 or user.role.id == 3 %}
+<div class="row" style="padding-top: 20px; padding-bottom: 30px; margin: auto; width: 70%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Zdravotní záznamy</div>
+        </div>
+        {% if health_record_count > 0 %}
+            <div class="card card-body">
+                <table class="table">
+                    <th>Název</th>
+                    <th>Typ záznamu</th>
+                    <th>Popis</th>
+                    {% for i in healt_records %}
+                        <tr>
+                            <td>{{i.record_name}}</td>
+                            <td>{{i.record_type}}</td>
+                            <td>{{i.record_description}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+        <div class="card card-body">
+            <h4 style="text-align: center">Žádné záznamy k tomuto zvířátku nemáme.</h4>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -18,7 +18,7 @@
                 <th></th>
                 {% for i in not_assigned_reservations %}
                     <tr>
-                        <td>{{i.animal.animal_name}}</td>
+                        <td><a href="{% url 'all_animals' %}{{i.animal.id}}/">{{i.animal.animal_name}}</a></td>
                         <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
                         <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
                         <td><a href="assign/{{i.id}}/{{user.id}}/">Rezervovat</a></td>
@@ -44,7 +44,7 @@
                 {% for i in assigned_reservations %}
                     <tr>
                         <td>{{i.user_name}}</td>
-                        <td>{{i.animal.animal_name}}</td>
+                        <td><a href="{% url 'all_animals' %}{{i.animal.id}}/">{{i.animal.animal_name}}</a></td>
                         <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
                         <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
                         <td>{{ i.outing_verification|yesno:"Ano,Ne" }}</td>

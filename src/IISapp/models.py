@@ -79,14 +79,14 @@ class outing_reservation(models.Model):
     outing_assigned = models.BooleanField(default=False)
 
 
-class record(models.Model):
+class Record(models.Model):
     animal = models.ForeignKey(Animal, on_delete=CASCADE)
     record_name = models.CharField(max_length=255)
     record_type = models.CharField(max_length=255)
     record_description = models.TextField(blank=True)
 
 
-class requests(models.Model):
+class Requests(models.Model):
     contractor = models.ForeignKey(User, on_delete=CASCADE, related_name='contractor_name')
     solver = models.ForeignKey(User, on_delete=PROTECT, blank=True, related_name='solver_name')
     animal = models.ForeignKey(Animal, on_delete=CASCADE, blank=True)
