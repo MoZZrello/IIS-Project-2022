@@ -17,16 +17,20 @@ class MyClearableFileInput(ClearableFileInput):
     input_text = 'Změnit'
 
 
-class DateInput(forms.DateInput):
+class MyDateInput(forms.DateInput):
     input_type = 'date'
+    format = ["%d.%m.%Y"]
 
 
 class CreateUserForm(UserCreationForm):
-    birthdate = forms.DateField(widget=DateInput)
+    birthdate = forms.DateField(
+        widget=forms.DateInput(format='%d.%m.%Y'),
+        input_formats=['%d.%m.%Y']
+    )
+    phone_number = forms.CharField(label="Telefon")
 
     class Meta:
         model = User
-        widgets = {'birthdate': DateInput()}
         fields = ['full_name', 'user_name', 'mail', 'phone_number', 'birthdate', 'password1', 'password2']
 
 

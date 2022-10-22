@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2022 at 10:13 PM
+-- Generation Time: Oct 22, 2022 at 12:36 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -259,7 +259,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (32, 'IISapp', '0012_alter_outing_reservation_user_name', '2022-10-21 15:03:22.098352'),
 (33, 'IISapp', '0013_alter_outing_reservation_user_name', '2022-10-21 15:04:41.649187'),
 (34, 'IISapp', '0014_alter_animal_image', '2022-10-21 19:27:27.336196'),
-(35, 'IISapp', '0015_alter_animal_image', '2022-10-21 19:59:46.495702');
+(35, 'IISapp', '0015_alter_animal_image', '2022-10-21 19:59:46.495702'),
+(36, 'IISapp', '0016_requests_outing_assigned', '2022-10-22 08:47:18.558089'),
+(37, 'IISapp', '0017_alter_requests_solver', '2022-10-22 09:08:03.276856');
 
 -- --------------------------------------------------------
 
@@ -278,7 +280,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('yvwcqeitndet80h7q8rmspidrv5ea1j7', '.eJxVjDsOwjAQRO_iGlnxR96Ykp4zWGvvgAMolvKpEHcnkVJAOfPezFslXpea1hlTGkSdFanTb5e5PDHuQB483psubVymIetd0Qed9bUJXpfD_TuoPNdtbanrUOTWw_ngGEDuxdjQW-Jog7EdTBGbJcKBgyFPbCJtARBPRX2-8ig4aA:1olxWk:-o1BlpBlIpvSYR6ZSieYUcXOwCFb6G2cb4P_4D0u1FQ', '2022-11-04 19:17:54.109602');
+('sue6nwyguboy789q00dbetyhyd7p1s21', '.eJxVjDsOwjAQRO_iGlnxR96Ykp4zWGvvgAMolvKpEHcnkVJAOfPezFslXpea1hlTGkSdFanTb5e5PDHuQB483psubVymIetd0Qed9bUJXpfD_TuoPNdtbanrUOTWw_ngGEDuxdjQW-Jog7EdTBGbJcKBgyFPbCJtARBPRX2-8ig4aA:1omBoS:vlT-qlNvC30LNST0zrEDrlIN0ZKioU6NSEPlirDlik4', '2022-11-05 10:33:08.194196');
 
 -- --------------------------------------------------------
 
@@ -331,10 +333,10 @@ CREATE TABLE `iisapp_outing_reservation` (
 INSERT INTO `iisapp_outing_reservation` (`id`, `outing_start`, `outing_end`, `outing_verification`, `animal_id`, `user_name_id`, `outing_assigned`) VALUES
 (3, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 1, 1, 6, 1),
 (4, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, 3, 1),
-(6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 0, 2, 6, 1),
+(6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 1, 2, 6, 1),
 (7, '2021-11-06 08:00:00.000000', '2021-11-06 08:30:00.000000', 1, 1, 6, 1),
-(8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 1, 6, 1),
-(9, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, 6, 0);
+(8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 1, 1, 6, 1),
+(9, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -355,7 +357,8 @@ CREATE TABLE `iisapp_record` (
 --
 
 INSERT INTO `iisapp_record` (`id`, `record_name`, `record_type`, `record_description`, `animal_id`) VALUES
-(1, 'Nájdení Marca', 'Nájdení', 'V pondělí sme našli marca v drogovém doupěti. Po příjezde na místo sme okamžite odhadli, že byl napíchaný kokainem. Odvykačka však proběhla hladce.', 1);
+(1, 'Nájdení Marca', 'Nájdení', 'V pondělí sme našli marca v drogovém doupěti. Po příjezde na místo sme okamžite odhadli, že byl napíchaný kokainem. Odvykačka však proběhla hladce.', 1),
+(2, 'První očkování', 'Zdravotní záznam', 'Po nájdení Marca sme udělali zdravotní prohlídku, odčervili jsme ho a udělali jsme první očkování, protože na čipu žádná očkování nebyli.', 1);
 
 -- --------------------------------------------------------
 
@@ -373,15 +376,20 @@ CREATE TABLE `iisapp_requests` (
   `request_verification` tinyint(1) NOT NULL,
   `animal_id` bigint(20) NOT NULL,
   `contractor_id` bigint(20) NOT NULL,
-  `solver_id` bigint(20) NOT NULL
+  `solver_id` bigint(20) DEFAULT NULL,
+  `outing_assigned_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `iisapp_requests`
 --
 
-INSERT INTO `iisapp_requests` (`id`, `datetime_start`, `datetime_end`, `veterinary_req`, `request_name`, `request_description`, `request_verification`, `animal_id`, `contractor_id`, `solver_id`) VALUES
-(1, '2022-11-30 12:00:00.000000', '2022-11-30 12:30:00.000000', 1, 'Odčervení Marca', 'Marco si už týden škrábe zadek  o beton. Potřebuje odčervit. Vopřed ďekuji.', 1, 1, 2, 3);
+INSERT INTO `iisapp_requests` (`id`, `datetime_start`, `datetime_end`, `veterinary_req`, `request_name`, `request_description`, `request_verification`, `animal_id`, `contractor_id`, `solver_id`, `outing_assigned_id`) VALUES
+(1, '2022-11-30 12:00:00.000000', '2022-11-30 12:30:00.000000', 1, 'Odčervení Marca', 'Marco si už týden škrábe zadek  o beton. Potřebuje odčervit. Vopřed ďekuji.', 1, 1, 2, 3, NULL),
+(2, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 3),
+(3, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 0, 'Venčení', '', 1, 2, 6, NULL, 6),
+(4, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 8),
+(5, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -417,10 +425,11 @@ CREATE TABLE `iisapp_user` (
 INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail`, `user_verification`, `user_name`, `password`, `role_id`, `last_login`, `date_joined`, `email`, `first_name`, `is_active`, `is_staff`, `is_superuser`, `last_name`, `profile_picture`) VALUES
 (2, 'Tester Keeper', '1995-03-25', '751175563', 'fakeemail@test.com', 1, 'testerkeeper', 'test123', 2, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
 (3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
-(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 1, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
-(6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-21 15:06:12.668415', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
-(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-21 19:17:54.106606', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
-(8, 'Admin Tester', '2000-11-02', '+421907777888', 'test@test.com', 1, 'admin', 'pbkdf2_sha256$390000$Sfx8EUo4d45eSiNwU73jJS$7LCninn1Jku+eiFwDjQBMTlQFnuOdV7mVx1dpojt0kM=', 1, '2022-10-20 09:49:27.689744', '2022-10-20 09:49:22.160002', '', '', 1, 0, 0, '', 'profile_pic_default.jpg');
+(4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 0, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', ''),
+(6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-22 10:32:09.866569', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
+(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-22 10:33:08.191037', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
+(8, 'Admin Tester', '2000-11-02', '+421907777888', 'test@test.com', 1, 'admin', 'pbkdf2_sha256$390000$Sfx8EUo4d45eSiNwU73jJS$7LCninn1Jku+eiFwDjQBMTlQFnuOdV7mVx1dpojt0kM=', 1, '2022-10-20 09:49:27.689744', '2022-10-20 09:49:22.160002', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
+(9, 'Peter Figa', '2001-02-20', '+420777444555', 'vet@vet.com', 1, 'figs_vet', 'pbkdf2_sha256$390000$4ivpKeBmZoivhuxlIzye6f$/yQsoFlk7XK5dQH8rnnRj0irWekHHWym4+FyxX5rlxQ=', 3, '2022-10-22 10:32:56.346672', '2022-10-22 10:17:40.495679', '', '', 1, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -585,6 +594,7 @@ ALTER TABLE `iisapp_requests`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IISapp_requests_animal_id_00ab5696_fk_IISapp_animal_id` (`animal_id`),
   ADD KEY `IISapp_requests_contractor_id_aa5765a7_fk_IISapp_user_id` (`contractor_id`),
+  ADD KEY `IISapp_requests_outing_assigned_id_0ed6873d_fk_IISapp_ou` (`outing_assigned_id`),
   ADD KEY `IISapp_requests_solver_id_afa4d480_fk_IISapp_user_id` (`solver_id`);
 
 --
@@ -673,7 +683,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `iisapp_animal`
@@ -691,19 +701,19 @@ ALTER TABLE `iisapp_outing_reservation`
 -- AUTO_INCREMENT for table `iisapp_record`
 --
 ALTER TABLE `iisapp_record`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `iisapp_requests`
 --
 ALTER TABLE `iisapp_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user`
 --
 ALTER TABLE `iisapp_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user_groups`
@@ -780,6 +790,7 @@ ALTER TABLE `iisapp_record`
 ALTER TABLE `iisapp_requests`
   ADD CONSTRAINT `IISapp_requests_animal_id_00ab5696_fk_IISapp_animal_id` FOREIGN KEY (`animal_id`) REFERENCES `iisapp_animal` (`id`),
   ADD CONSTRAINT `IISapp_requests_contractor_id_aa5765a7_fk_IISapp_user_id` FOREIGN KEY (`contractor_id`) REFERENCES `iisapp_user` (`id`),
+  ADD CONSTRAINT `IISapp_requests_outing_assigned_id_0ed6873d_fk_IISapp_ou` FOREIGN KEY (`outing_assigned_id`) REFERENCES `iisapp_outing_reservation` (`id`),
   ADD CONSTRAINT `IISapp_requests_solver_id_afa4d480_fk_IISapp_user_id` FOREIGN KEY (`solver_id`) REFERENCES `iisapp_user` (`id`);
 
 --
