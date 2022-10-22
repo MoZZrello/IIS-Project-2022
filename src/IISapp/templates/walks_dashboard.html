@@ -50,11 +50,22 @@
     </div>
 </div>
 
-<div class="row" style="padding-top: 30px; margin: auto; width: 90%; padding-bottom: 30px">
+<div class="row" style="padding-top: 50px; margin: auto; width: 90%; padding-bottom: 30px">
     <div class="col-md">
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Všechny rezervace</div>
             <div><a class="btn btn-sm btn-info" href="{% url 'create_walk' %}" style="background-color: forestgreen;color: white;">Vytvořit rezervaci</a></div>
+        </div>
+        <div class="card card-body">
+            <form method="GET">
+                {% for field in outingFilter.form %}
+                    <div style="display: inline-block;">
+                        {{ field.errors }}
+                        {{ field.label_tag }} {{ field }}
+                    </div>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit">Filtrovat</button>
+            </form>
         </div>
         <div class="card card-body">
             <table class="table">

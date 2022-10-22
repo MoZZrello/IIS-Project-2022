@@ -147,7 +147,10 @@ def walks_dashboard(request):
     requests = Requests.objects.filter(request_name="Venčení", veterinary_req=False, request_verification=False)
     record_count = requests.count()
 
-    context = {'user': user, 'reservations': reservations, 'requests': requests, 'record_count': record_count}
+    outingFilter = OutingsFilter(request.GET, queryset=reservations)
+    reservations = outingFilter.qs
+
+    context = {'user': user, 'reservations': reservations, 'requests': requests, 'outingFilter': outingFilter, 'record_count': record_count}
     return render(request, 'walks_dashboard.html', context)
 
 

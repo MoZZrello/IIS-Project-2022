@@ -140,3 +140,5 @@ MEDIA_URL = '/img/'
 MEDA_ROOT = os.path.join(BASE_DIR, 'static/img')
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+
+DATE_INPUT_FORMATS = '%d/%m/%Y'
