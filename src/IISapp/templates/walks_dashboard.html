@@ -14,7 +14,43 @@
     }
 </style>
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
-<div class="row">
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 90%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Rezervace čekající na schválení</div>
+        </div>
+        <div class="card card-body">
+            {% if record_count > 0 %}
+            <table class="table">
+                <th>Žadatel</th>
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th>Potvrzeno</th>
+                <th></th>
+                {% for i in requests %}
+                    <tr>
+                        <td>{{i.contractor}}</td>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.datetime_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.datetime_end|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_assigned.outing_verification|yesno:"Ano,Ne"}}</td>
+                        <td><a href="{% url 'verify_request' i.id i.outing_assigned.id %}">Verifikovat</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+            {% else %}
+                <div>
+                    <h4 style="text-align: center">Žádné rezerváce na schválení nečekají.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 30px; margin: auto; width: 90%; padding-bottom: 30px">
     <div class="col-md">
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Všechny rezervace</div>
@@ -35,7 +71,7 @@
                         <td>{{i.animal.animal_name}}</td>
                         <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
                         <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
-                        <td>{{ i.outing_verification|yesno:"Ano,Ne" }}</td>
+                        <td>{{i.outing_verification|yesno:"Ano,Ne"}}</td>
                         <td><a href="{% url 'update_walk' i.id %}">Upravit</a></td>
                         <td><a href="{% url 'delete_walk' i.id %}">Odstránit</a></td>
                     </tr>

@@ -139,12 +139,24 @@ def delete_walk(request, pk):
     return render(request, 'walk_delete.html', context)
 
 
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['Pečovatel'])
 def walks_dashboard(request):
     user = request.user
     reservations = outing_reservation.objects.all()
-    context = {'user': user, 'reservations': reservations}
+    requests = Requests.objects.filter(request_name="Venčení", veterinary_req=False, request_verification=False)
+    record_count = requests.count()
+
+    context = {'user': user, 'reservations': reservations, 'requests': requests, 'record_count': record_count}
     return render(request, 'walks_dashboard.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def verify_request(request, reqid, resid):
+    outing_reservation.objects.filter(id=resid).update(outing_verification=True)
+    Requests.objects.filter(id=reqid).update(request_verification=True)
+    return redirect('walks_dashboard')
 
 
 @login_required(login_url='login')
@@ -162,13 +174,27 @@ def reservation(request):
 @allowed_users(allowed_roles=['Dobrovolník'])
 def assign_walk(request, resid, name):
     outing_reservation.objects.filter(id=resid).update(user_name=name, outing_verification=False)
+    outing = outing_reservation.objects.get(id=resid)
+    r = Requests(contractor=outing.user_name,
+                 animal=outing.animal,
+                 datetime_start=outing.outing_start,
+                 datetime_end=outing.outing_end,
+                 veterinary_req=False,
+                 request_name="Venčení",
+                 request_verification=False,
+                 outing_assigned=outing,
+                 )
+    r.save()
     return redirect('reservation')
 
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Dobrovolník'])
 def unassign_walk(request, resid):
-    outing_reservation.objects.filter(id=resid).update(user_name=None, outing_verification=False)
+    outing = outing_reservation.objects.filter(id=resid).update(user_name=None, outing_verification=False)
+    r = Requests.objects.filter(outing_assigned=outing)
+    if r is not None:
+        r.delete()
     return redirect('reservation')
 
 

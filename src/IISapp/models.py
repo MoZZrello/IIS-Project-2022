@@ -88,7 +88,7 @@ class Record(models.Model):
 
 class Requests(models.Model):
     contractor = models.ForeignKey(User, on_delete=CASCADE, related_name='contractor_name')
-    solver = models.ForeignKey(User, on_delete=PROTECT, blank=True, related_name='solver_name')
+    solver = models.ForeignKey(User, on_delete=PROTECT, blank=True, null=True, related_name='solver_name')
     animal = models.ForeignKey(Animal, on_delete=CASCADE, blank=True)
     datetime_start = models.DateTimeField()
     datetime_end = models.DateTimeField(blank=True)
@@ -96,3 +96,4 @@ class Requests(models.Model):
     request_name = models.CharField(max_length=255)
     request_description = models.TextField(blank=True)
     request_verification = models.BooleanField()
+    outing_assigned = models.ForeignKey(outing_reservation, on_delete=CASCADE, blank=True, null=True)
