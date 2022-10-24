@@ -8,7 +8,7 @@
 <style>
     .wrapper {
         display: grid;
-        grid-template-columns: 78% 22%;
+        grid-template-columns: 57% 13% 30%;
         grid-template-rows: 50px;
         grid-column-gap: 5px;
         align-content: center;
@@ -26,6 +26,7 @@
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Všechny zvířátka</div>
             <div><a class="btn btn-sm btn-info" href="{% url 'add_animals' %}" style="background-color: forestgreen;color: white;">Přidat zvíře</a></div>
+            <div><a class="btn btn-sm btn-info" href="{% url 'add_vet_request' %}" style="background-color: forestgreen;color: white;">Vytvořit požadavek na veterináře</a></div>
         </div>
         <div class="card card-body">
             <table class="table">

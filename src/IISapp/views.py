@@ -303,6 +303,21 @@ def all_vet_requests(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def add_vet_request(request):
+    form = CreateVetRequestForm()
+
+    if request.method == 'POST':
+        form = CreateVetRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('all_animals')
+
+    context = {'form': form}
+    return render(request, 'add_vet_request.html', context)
+
+
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['Veterinář'])
 def make_reservation(request, reqid):
     Requests.objects.filter(id=reqid).update(request_verification=False)

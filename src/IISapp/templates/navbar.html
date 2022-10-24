@@ -8,6 +8,7 @@
 {% url 'reservation' as reservation_url %}
 {% url 'all_animals' as animals_url %}
 {% url 'volunteer_verification' as verify_url %}
+{% url 'all_vet_requests' as all_vet_requests_url %}
 {% load static %}
 
 <nav class="navbar navbar-expand-lg hs-bg-secondary text-uppercase fixed-top" id="mainNav">
@@ -25,9 +26,9 @@
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ profile_url }}">Vítej, {{request.user.full_name}}!</a></li>
                 {% endif %}
 
-                {% if user.role.id != 2 %}
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ index_url }}">Domů</a></li>
-                
+
+                {% if user.role.id != 2 and user.role.id != 3 %}
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ about_url }}">O nás</a></li>
                 {% endif %}
 
@@ -42,6 +43,10 @@
                 {% if user.is_authenticated %}
                     {% if user.role.id == 4 %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ reservation_url }}">Rezervace procházek</a></li>
+                    {% endif %}
+
+                    {% if user.role.id == 3 %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ all_vet_requests_url }}">Požadavky</a></li>
                     {% endif %}
 
                     {% if user.role.id == 2 %}

@@ -21,6 +21,7 @@ urlpatterns = [
     path('animal/add/', views.add_animals, name="add_animals"),
     path('animal/update/<str:pk>/', views.update_animals, name="update_animals"),
     path('animal/delete/<str:pk>/', views.delete_animals, name="delete_animals"),
+    path('animal/vet/', views.add_vet_request, name="add_vet_request"),
     path('volunteer/verification/', views.volunteer_verification, name="volunteer_verification"),
     path('volunteer/verification/verify/<int:userid>/', views.verify_volunteer, name="verify_volunteer"),
     path('volunteer/verification/unverify/<int:userid>/', views.unverify_volunteer, name="unverify_volunteer"),

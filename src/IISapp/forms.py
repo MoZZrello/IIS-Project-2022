@@ -22,6 +22,16 @@ class MyDateInput(forms.DateInput):
     format = ["%d.%m.%Y"]
 
 
+class MyAnimalChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return "%s" % obj.animal_name
+
+
+class MyUserChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return "%s" % obj.full_name
+
+
 class CreateUserForm(UserCreationForm):
     birthdate = forms.DateField(
         widget=forms.DateInput(format='%d.%m.%Y'),
@@ -35,10 +45,22 @@ class CreateUserForm(UserCreationForm):
 
 
 class CreateWalkForm(ModelForm):
+    user_name = MyUserChoiceField(queryset=User.objects.all())
+    animal = MyAnimalChoiceField(queryset=Animal.objects.all())
+
     class Meta:
         model = outing_reservation
         widgets = {'outing_start': forms.DateTimeInput(), 'outing_end': forms.DateTimeInput()}
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CreateWalkForm, self).__init__(*args, **kwargs)
+        self.fields['user_name'].label = "Dobrovolník"
+        self.fields['animal'].label = "Zvířátko"
+        self.fields['outing_start'].label = "Začátek"
+        self.fields['outing_end'].label = "Konec"
+        self.fields['outing_verification'].label = "Ověření"
+        self.fields['outing_assigned'].label = "Je přidělené"
 
 
 class CreateAnimalForm(ModelForm):
@@ -55,6 +77,47 @@ class CreateAnimalForm(ModelForm):
     class Meta:
         model = Animal
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CreateAnimalForm, self).__init__(*args, **kwargs)
+        self.fields['animal_name'].label = "Jméno zvířátka"
+        self.fields['species'].label = "Druh"
+        self.fields['breed'].label = "Rasa"
+        self.fields['age'].label = "Věk"
+        self.fields['animal_description'].label = "Popis"
+        self.fields['capture_date'].label = "Datum odchycení"
+        self.fields['outing_suitable'].label = "Vhodný pro procházky"
+        self.fields['animal_verification'].label = "Přítomen v útulku"
+
+
+class CreateVetRequestForm(ModelForm):
+    contractor = MyUserChoiceField(queryset=User.objects.all())
+    solver = MyUserChoiceField(queryset=User.objects.all())
+    animal = MyAnimalChoiceField(queryset=Animal.objects.all())
+    datetime_start = forms.DateTimeField(
+        widget=forms.DateTimeInput(format='%d.%m.%Y %H:%M'),
+        input_formats=['%d.%m.%Y %H:%M']
+    )
+    datetime_end = forms.DateTimeField(
+        widget=forms.DateTimeInput(format='%d.%m.%Y %H:%M'),
+        input_formats=['%d.%m.%Y %H:%M']
+    )
+
+    class Meta:
+        model = Requests
+        fields = '__all__'
+        exclude = ('outing_assigned', 'request_verification',)
+
+    def __init__(self, *args, **kwargs):
+        super(CreateVetRequestForm, self).__init__(*args, **kwargs)
+        self.fields['contractor'].label = "Zadavatel"
+        self.fields['solver'].label = "Řešitel"
+        self.fields['animal'].label = "Zvířátko"
+        self.fields['datetime_start'].label = "Začátek"
+        self.fields['datetime_end'].label = "Konec"
+        self.fields['veterinary_req'].label = "Požadavek na veterináře"
+        self.fields['request_name'].label = "Název požadavku"
+        self.fields['request_description'].label = "Popis požadavku"
 
 
 class ProfileForm(ModelForm):

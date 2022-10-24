@@ -95,5 +95,5 @@ class Requests(models.Model):
     veterinary_req = models.BooleanField()
     request_name = models.CharField(max_length=255)
     request_description = models.TextField(blank=True)
-    request_verification = models.BooleanField()
+    request_verification = models.BooleanField(default=False)
     outing_assigned = models.ForeignKey(outing_reservation, on_delete=CASCADE, blank=True, null=True)
