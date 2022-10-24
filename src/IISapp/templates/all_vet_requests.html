@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Všechny požadavky{% endblock %}
+
+{% block content %}
+
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px;
+        align-content: center;
+    }
+    .profile_pic {
+        max-width: 50px;
+        max-height: 50px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<div class="row" style="padding-top: 30px; padding-bottom: 30px; margin: auto; width: 90%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Vaše čekající požadavky</div>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th>Zadavatel</th>
+                <th>Zvířátko</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th>Název</th>
+                <th>Popis</th>
+                <th>Potvrzeno</th>
+                <th></th>
+                {% for req in next_requests %}
+                    <tr>
+                        <td>{{req.contractor.full_name}}</td>
+                        <td><a href="{% url 'all_animals' %}{{animal.id}}/">{{req.animal.animal_name}}</a></td>
+                        <td>{{req.datetime_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{req.datetime_end|date:"d.n.Y H:i"}}</td>
+                        <td>{{req.request_name}}</td>
+                        <td>{{req.request_description}}</td>
+                        <td>{{req.request_verification|yesno:"Ano,Ne" }}</td>
+                        {% if req.request_verification == False %}
+                            <td><a href="{% url 'make_reservation' req.id%}">Rezervovat vyšetření</a></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-top: 30px; padding-bottom: 30px; margin: auto; width: 90%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Všechny požadavky</div>
+        </div>
+        <div class="card card-body">
+            <table class="table">
+                <th>Zadavatel</th>
+                <th>Řešitel</th>
+                <th>Zvířátko</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                <th>Název</th>
+                <th>Popis</th>
+                <th></th>
+                {% for req in requests %}
+                    <tr>
+                        <td>{{req.contractor.full_name}}</td>
+                        <td>{{req.solver.full_name}}</td>
+                        <td><a href="{% url 'all_animals' %}{{animal.id}}/">{{req.animal.animal_name}}</a></td>
+                        <td>{{req.datetime_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{req.datetime_end|date:"d.n.Y H:i"}}</td>
+                        <td>{{req.request_name}}</td>
+                        <td>{{req.request_description}}</td>
+                        <td><a href="">Upravit</a></td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

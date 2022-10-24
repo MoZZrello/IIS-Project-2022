@@ -24,5 +24,7 @@ urlpatterns = [
     path('volunteer/verification/', views.volunteer_verification, name="volunteer_verification"),
     path('volunteer/verification/verify/<int:userid>/', views.verify_volunteer, name="verify_volunteer"),
     path('volunteer/verification/unverify/<int:userid>/', views.unverify_volunteer, name="unverify_volunteer"),
+    path('request/vet/all/', views.all_vet_requests, name="all_vet_requests"),
+    path('request/vet/all/reserve/<int:reqid>/', views.make_reservation, name="make_reservation"),
     path('admin_site/', views.admin_site, name="admin_site"),
 ] 

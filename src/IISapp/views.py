@@ -147,10 +147,22 @@ def walks_dashboard(request):
     requests = Requests.objects.filter(request_name="Venčení", veterinary_req=False, request_verification=False)
     record_count = requests.count()
 
+    not_vets = User.objects.exclude(role=3)
+    vet_requests = outing_reservation.objects.filter(user_name__isnull=False, outing_start__gte=datetime.datetime.now())
+    for people in not_vets:
+        vet_requests = vet_requests.exclude(user_name=people)
+    vet_count = vet_requests.count()
+
     outingFilter = OutingsFilter(request.GET, queryset=reservations)
     reservations = outingFilter.qs
 
-    context = {'user': user, 'reservations': reservations, 'requests': requests, 'outingFilter': outingFilter, 'record_count': record_count}
+    context = {'user': user,
+               'reservations': reservations,
+               'requests': requests,
+               'outingFilter': outingFilter,
+               'record_count': record_count,
+               'vet_requests': vet_requests,
+               'vet_count': vet_count}
     return render(request, 'walks_dashboard.html', context)
 
 
@@ -278,6 +290,31 @@ def verify_volunteer(request, userid):
 def unverify_volunteer(request, userid):
     User.objects.filter(id=userid).update(user_verification=0)
     return redirect('volunteer_verification')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář'])
+def all_vet_requests(request):
+    user = request.user
+    requests = Requests.objects.filter(veterinary_req=True)
+    next_requests = Requests.objects.filter(veterinary_req=True, solver=user, datetime_start__gte=datetime.datetime.now())
+    context = {'user': user, 'requests': requests, 'next_requests': next_requests}
+    return render(request, 'all_vet_requests.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář'])
+def make_reservation(request, reqid):
+    Requests.objects.filter(id=reqid).update(request_verification=False)
+    req = Requests.objects.get(id=reqid)
+    reserve = outing_reservation(user_name=req.solver,
+                                 animal=req.animal,
+                                 outing_start=req.datetime_start,
+                                 outing_end=req.datetime_end,
+                                 outing_verification=True,
+                                 outing_assigned=True)
+    reserve.save()
+    return redirect('all_vet_requests')
 
 
 @login_required(login_url='login')

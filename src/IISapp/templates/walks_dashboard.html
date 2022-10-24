@@ -50,6 +50,36 @@
     </div>
 </div>
 
+<div class="row" style="padding-top: 30px; margin: auto; width: 90%">
+    <div class="col-md">
+        <div class="card card-body wrapper">
+            <div style="font-size: 30px;">Rezervace vyšetření</div>
+        </div>
+        <div class="card card-body">
+            {% if vet_count > 0 %}
+            <table class="table">
+                <th>Veterinář</th>
+                <th>Mazlík</th>
+                <th>Začátek</th>
+                <th>Konec</th>
+                {% for i in vet_requests %}
+                    <tr>
+                        <td>{{i.user_name.full_name}}</td>
+                        <td>{{i.animal.animal_name}}</td>
+                        <td>{{i.outing_start|date:"d.n.Y H:i"}}</td>
+                        <td>{{i.outing_end|date:"d.n.Y H:i"}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <div>
+                    <h4 style="text-align: center">Žádné rezerváce vyšetření.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 <div class="row" style="padding-top: 50px; margin: auto; width: 90%; padding-bottom: 30px">
     <div class="col-md">
         <div class="card card-body wrapper">
