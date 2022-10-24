@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2022 at 12:36 PM
+-- Generation Time: Oct 24, 2022 at 01:51 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -261,7 +261,8 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (34, 'IISapp', '0014_alter_animal_image', '2022-10-21 19:27:27.336196'),
 (35, 'IISapp', '0015_alter_animal_image', '2022-10-21 19:59:46.495702'),
 (36, 'IISapp', '0016_requests_outing_assigned', '2022-10-22 08:47:18.558089'),
-(37, 'IISapp', '0017_alter_requests_solver', '2022-10-22 09:08:03.276856');
+(37, 'IISapp', '0017_alter_requests_solver', '2022-10-22 09:08:03.276856'),
+(38, 'IISapp', '0018_alter_requests_request_verification', '2022-10-24 11:45:45.725470');
 
 -- --------------------------------------------------------
 
@@ -274,13 +275,6 @@ CREATE TABLE `django_session` (
   `session_data` longtext NOT NULL,
   `expire_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `django_session`
---
-
-INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('sue6nwyguboy789q00dbetyhyd7p1s21', '.eJxVjDsOwjAQRO_iGlnxR96Ykp4zWGvvgAMolvKpEHcnkVJAOfPezFslXpea1hlTGkSdFanTb5e5PDHuQB483psubVymIetd0Qed9bUJXpfD_TuoPNdtbanrUOTWw_ngGEDuxdjQW-Jog7EdTBGbJcKBgyFPbCJtARBPRX2-8ig4aA:1omBoS:vlT-qlNvC30LNST0zrEDrlIN0ZKioU6NSEPlirDlik4', '2022-11-05 10:33:08.194196');
 
 -- --------------------------------------------------------
 
@@ -336,7 +330,8 @@ INSERT INTO `iisapp_outing_reservation` (`id`, `outing_start`, `outing_end`, `ou
 (6, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 1, 2, 6, 1),
 (7, '2021-11-06 08:00:00.000000', '2021-11-06 08:30:00.000000', 1, 1, 6, 1),
 (8, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 1, 1, 6, 1),
-(9, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, NULL, 0);
+(9, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 1, NULL, 0),
+(10, '2022-12-05 12:00:00.000000', '2022-12-05 13:00:00.000000', 1, 2, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -389,7 +384,11 @@ INSERT INTO `iisapp_requests` (`id`, `datetime_start`, `datetime_end`, `veterina
 (2, '2022-11-06 08:00:00.000000', '2022-11-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 3),
 (3, '2022-12-06 08:00:00.000000', '2022-12-06 08:30:00.000000', 0, 'Venčení', '', 1, 2, 6, NULL, 6),
 (4, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 8),
-(5, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 8);
+(5, '2023-01-06 08:00:00.000000', '2023-01-06 08:30:00.000000', 0, 'Venčení', '', 1, 1, 6, NULL, 8),
+(7, '2022-11-30 12:00:00.000000', '2022-11-30 12:30:00.000000', 1, 'Očkování', 'Macho potřebuje očkování proti běsnotě.', 1, 3, 7, 9, NULL),
+(8, '2022-12-05 12:00:00.000000', '2022-12-05 13:00:00.000000', 1, 'Stříhání', 'Al Pacachino už potřebuje ostříhat srst.', 0, 2, 7, 9, NULL),
+(9, '2022-05-12 00:00:00.000000', '2022-05-12 00:00:00.000000', 1, 'Vakcína', 'Čím dříve prosím.', 1, 1, 7, 9, NULL),
+(11, '2023-01-01 10:00:00.000000', '2023-01-01 10:30:00.000000', 1, 'Test', 'Test', 1, 2, 7, 9, NULL);
 
 -- --------------------------------------------------------
 
@@ -427,9 +426,10 @@ INSERT INTO `iisapp_user` (`id`, `full_name`, `birthdate`, `phone_number`, `mail
 (3, 'Tester Vet', '1998-05-01', '456432874', 'imadeupthisemail@test.com', 1, 'testervet', 'test123', 3, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
 (4, 'Tester Volunteer', '2001-10-10', '777777777', 'ilovepokemon@test.com', 0, 'testervolunteer', 'test123', 4, NULL, '2022-10-18 12:21:59.448135', '', '', 1, 0, 0, '', ''),
 (6, 'Tester Drak', '2006-01-26', '+12125552369', 'test@gmail.com', 1, 'regtest1', 'pbkdf2_sha256$390000$ecKMSEJWWxMwyew7whkEJT$3470dXi+YxtthpnPD32HjsHr01FwusFJrOINbvzuVlA=', 4, '2022-10-22 10:32:09.866569', '2022-10-18 12:27:36.627011', 'test@gmail.com', '', 1, 0, 0, '', ''),
-(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-22 10:33:08.191037', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
+(7, 'Jozef Mrkva', '2006-03-09', '+12125552368', 'test@test.com', 1, 'mrkvanaprovazku', 'pbkdf2_sha256$390000$NElZdpbh2AOmQebR8BoK43$MH5EL64Ebp4BFuZPrkWc202b/0r/PD9qCrkSWsBZaCo=', 2, '2022-10-24 11:44:45.168114', '2022-10-19 13:35:31.338733', '', '', 1, 0, 0, '', ''),
 (8, 'Admin Tester', '2000-11-02', '+421907777888', 'test@test.com', 1, 'admin', 'pbkdf2_sha256$390000$Sfx8EUo4d45eSiNwU73jJS$7LCninn1Jku+eiFwDjQBMTlQFnuOdV7mVx1dpojt0kM=', 1, '2022-10-20 09:49:27.689744', '2022-10-20 09:49:22.160002', '', '', 1, 0, 0, '', 'profile_pic_default.jpg'),
-(9, 'Peter Figa', '2001-02-20', '+420777444555', 'vet@vet.com', 1, 'figs_vet', 'pbkdf2_sha256$390000$4ivpKeBmZoivhuxlIzye6f$/yQsoFlk7XK5dQH8rnnRj0irWekHHWym4+FyxX5rlxQ=', 3, '2022-10-22 10:32:56.346672', '2022-10-22 10:17:40.495679', '', '', 1, 0, 0, '', '');
+(9, 'Peter Figa', '2001-02-20', '+420777444555', 'vet@vet.com', 1, 'figs_vet', 'pbkdf2_sha256$390000$4ivpKeBmZoivhuxlIzye6f$/yQsoFlk7XK5dQH8rnnRj0irWekHHWym4+FyxX5rlxQ=', 3, '2022-10-24 11:41:42.451366', '2022-10-22 10:17:40.495679', '', '', 1, 0, 0, '', ''),
+(10, 'Petr Chcípl', '2002-05-23', '+420777444888', 'vencitel@hotmail.com', 0, 'chcip-vencitel', 'pbkdf2_sha256$390000$PfldK1Z62nYd1ngK94ltDs$RZsqivfArBL5K5QQrW/1BIKS78OFTKF3RD6cXBueB5c=', 4, '2022-10-24 11:51:06.527755', '2022-10-24 11:50:59.861462', '', '', 1, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -683,7 +683,7 @@ ALTER TABLE `django_content_type`
 -- AUTO_INCREMENT for table `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `iisapp_animal`
@@ -695,7 +695,7 @@ ALTER TABLE `iisapp_animal`
 -- AUTO_INCREMENT for table `iisapp_outing_reservation`
 --
 ALTER TABLE `iisapp_outing_reservation`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `iisapp_record`
@@ -707,13 +707,13 @@ ALTER TABLE `iisapp_record`
 -- AUTO_INCREMENT for table `iisapp_requests`
 --
 ALTER TABLE `iisapp_requests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user`
 --
 ALTER TABLE `iisapp_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `iisapp_user_groups`
