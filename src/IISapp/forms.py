@@ -134,13 +134,14 @@ class ProfileForm(ModelForm):
 
 class AllUsersForm(ModelForm):
     model = User
-    fields = ['full_name', 'birthdate', 'phone_number', 'mail', 'user_verification', 'user_name', 'password', 'role_id', 'last login', 'date_joined', 'is_active', 'is_staff', 'is_superuser']
+    fields = ['full_name', 'birthdate', 'phone_number', 'mail', 'user_verification', 'user_name', 'password', 'role_id',
+              'last login', 'date_joined', 'is_active', 'is_staff', 'is_superuser']
     full_name = forms.CharField(label="Celé jméno")
     phone_number = forms.CharField(label="Telefon")
     mail = forms.CharField(required=False, label="Email")
-    profile_picture = forms.ImageField(required=False, label="Profilová fotografie", widget=MyClearableFileInput(attrs={'name': 'btn'}))
+    profile_picture = forms.ImageField(required=False, label="Profilová fotografie",
+                                       widget=MyClearableFileInput(attrs={'name': 'btn'}))
 
     class Meta:
         model = User
         fields = ['full_name', 'phone_number', 'mail', 'profile_picture']
-

@@ -6,7 +6,7 @@
 {% block content %}
 
     <div class = text-center>
-    <h1 style="padding-top: 70px;; background-color: mediumseagreen">Administrátor</h1>
+    <h1 style="padding-top: 70px; background-color: mediumseagreen">Administrátor</h1>
     </div>
 
     <div class="row" style="margin-bottom: 20px; margin-top: 30px;">
@@ -28,33 +28,27 @@
             <h5>Uživatelé</h5>
         </div>
         <div class="card card-body">
-            <table class="table">
+            <table style="display: block; overflow-x: auto;" class="table">
                 <th>Profilové foto</th>
                 <th>Jméno</th>
+                <th>Role</th>
                 <th>Datum narození</th>
                 <th>Telefoní č.</th>
                 <th>E-mail</th>
                 <th>Ověření</th>
                 <th>Login</th>
                 <th>Heslo</th>
-                <th>Naposledy přihlášen</th>
-                <th>Aktivní</th>
-                <th>Pracovník</th>
-                <th>Admin</th>
                 {% for i in users %}
                     <tr>
                         <td>{{i.profile_picture}}</td>
-                        <td>{{i.full_name}}</td>
+                        <td><a href="{% url 'user_desc' i.id%}">{{i.full_name}}</a></td>
+                        <td>{{i.role}}</td>
                         <td>{{i.birthdate|date:'d.n.Y'}}</td>
                         <td>{{i.phone_number}}</td>
                         <td>{{i.mail}}</td>
                         <td>{{i.user_verification}}</td>
                         <td>{{i.user_name}}</td>
                         <td>{{i.password}}</td>
-                        <td>{{i.last_login|date:'d.n.Y'}}</td>
-                        <td>{{i.is_active}}</td>
-                        <td>{{i.is_staff}}</td>
-                        <td>{{i.is_superuser}}</td>
                     </tr>
 
                 {% endfor %}

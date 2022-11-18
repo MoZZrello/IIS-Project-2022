@@ -27,5 +27,11 @@ urlpatterns = [
     path('volunteer/verification/unverify/<int:userid>/', views.unverify_volunteer, name="unverify_volunteer"),
     path('request/vet/all/', views.all_vet_requests, name="all_vet_requests"),
     path('request/vet/all/reserve/<int:reqid>/', views.make_reservation, name="make_reservation"),
-    path('admin_site/', views.admin_site, name="admin_site"),
+    path('admin/', views.admin_site, name="admin_site"),
+    path('admin/users/<int:userid>/', views.user_desc, name="user_desc"),
+    path('admin/users/delete/<str:pk>', views.user_delete, name="user_delete"),
+    path('admin/users/change/vet/<int:pk>', views.user_to_veterinary, name="user_to_veterinary"),
+    path('admin/users/change/keeper/<int:pk>', views.user_to_keeper, name="user_to_keeper"),
+    path('admin/users/change/admin/<int:pk>', views.user_to_admin, name="user_to_admin"),
+    path('admin/users/change/profil/<str:pk>', views.user_update, name="user_update"),
 ] 

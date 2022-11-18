@@ -37,7 +37,8 @@ def animal_profile(request, animalid):
     record_count = record.count()
     health_record_count = healt_records.count()
 
-    context = {'animal': animal, 'user': user, 'healt_records': healt_records, 'record': record, 'record_count': record_count, 'health_record_count': health_record_count}
+    context = {'animal': animal, 'user': user, 'healt_records': healt_records, 'record': record,
+               'record_count': record_count, 'health_record_count': health_record_count}
     return render(request, 'animal_page.html', context)
 
 
@@ -85,7 +86,8 @@ def user_profile(request):
     form = ProfileForm(instance=user)
 
     walks = outing_reservation.objects.filter(user_name=request.user.id, outing_start__lt=datetime.datetime.now())
-    walks_active = outing_reservation.objects.filter(user_name=request.user.id, outing_start__gte=datetime.datetime.now())
+    walks_active = outing_reservation.objects.filter(user_name=request.user.id,
+                                                     outing_start__gte=datetime.datetime.now())
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=user)
@@ -178,10 +180,13 @@ def verify_request(request, reqid, resid):
 @allowed_users(allowed_roles=['Dobrovolník'])
 def reservation(request):
     user = request.user
-    not_assigned_reservations = outing_reservation.objects.filter(user_name__isnull=True, outing_start__gte=datetime.datetime.now())
-    assigned_reservations = outing_reservation.objects.filter(user_name=user.id, outing_start__gte=datetime.datetime.now())
+    not_assigned_reservations = outing_reservation.objects.filter(user_name__isnull=True,
+                                                                  outing_start__gte=datetime.datetime.now())
+    assigned_reservations = outing_reservation.objects.filter(user_name=user.id,
+                                                              outing_start__gte=datetime.datetime.now())
 
-    context = {'user': user, 'not_assigned_reservations': not_assigned_reservations, 'assigned_reservations': assigned_reservations}
+    context = {'user': user, 'not_assigned_reservations': not_assigned_reservations,
+               'assigned_reservations': assigned_reservations}
     return render(request, 'walks_reservations.html', context)
 
 
@@ -215,7 +220,7 @@ def unassign_walk(request, resid):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Pečovatel'])
-def all_animals(request):
+def all_animals(request, pk):
     user = request.user
     animals = Animal.objects.all()
     context = {'user': user, 'animals': animals}
@@ -274,7 +279,8 @@ def volunteer_verification(request):
     unverify_counter = unverified_volunteers.count()
     verify_counter = verified_volunteers.count()
 
-    context = {'verify_counter': verify_counter, 'unverify_counter': unverify_counter, 'unverified_volunteers': unverified_volunteers, 'verified_volunteers': verified_volunteers}
+    context = {'verify_counter': verify_counter, 'unverify_counter': unverify_counter,
+               'unverified_volunteers': unverified_volunteers, 'verified_volunteers': verified_volunteers}
     return render(request, 'volunteer_verification.html', context)
 
 
@@ -297,7 +303,8 @@ def unverify_volunteer(request, userid):
 def all_vet_requests(request):
     user = request.user
     requests = Requests.objects.filter(veterinary_req=True)
-    next_requests = Requests.objects.filter(veterinary_req=True, solver=user, datetime_start__gte=datetime.datetime.now())
+    next_requests = Requests.objects.filter(veterinary_req=True, solver=user,
+                                            datetime_start__gte=datetime.datetime.now())
     context = {'user': user, 'requests': requests, 'next_requests': next_requests}
     return render(request, 'all_vet_requests.html', context)
 
@@ -339,4 +346,62 @@ def admin_site(request):
     user_filter = UserFilter(request.GET, queryset=users)
     users = user_filter.qs
     context = {'users': users, 'user_filter': user_filter}
+
     return render(request, 'admin_site.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_desc(request, userid):
+    user = User.objects.get(id=userid)
+    context = {'user': user}
+    return render(request, 'user_desc.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_delete(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == 'POST':
+        user.delete()
+        return redirect('admin_site')
+
+    context = {'user': user}
+    return render(request, 'user_delete.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_to_veterinary(request, pk):
+    User.objects.filter(id=pk).update(role=3)
+    return redirect('admin_site')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_to_keeper(request, pk):
+    User.objects.filter(id=pk).update(role=2)
+    return redirect('admin_site')
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_to_admin(request, pk):
+    User.objects.filter(id=pk).update(role=1)
+    return redirect('admin_site')
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_update(request, pk):
+    user = request.user
+    form = ProfileForm(instance=user)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_site.html')
+
+    context = {'form': form}
+    return render(request, 'user_update.html', context)
+
+

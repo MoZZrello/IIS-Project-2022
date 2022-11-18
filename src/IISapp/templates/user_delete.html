@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .admin_button {
+      border: none;
+      margin-left: 20px;
+      margin-right: 10px;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .delete_button {background-color: red}
+</style>
+
+
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<div style="margin: auto; width: 70%; text-align: center; height: 819px">
+    <p style="padding-top: 350px">Opravdu chcete odstranit uživatele "{{user.full_name}}"?</p>
+
+    <form action="{% url 'user_delete' user.id %}" method="POST">
+        {% csrf_token %}
+
+        <a href="{% url 'admin_site' %}">Ne</a>
+        <button class="admin_button delete_button" type="submit">Ano</button>
+
+
+
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+
+{% block title %}Podrobnosti uživatele{% endblock %}
+
+{% block content %}
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: 78% 22%;
+        grid-template-rows: 50px;
+        grid-column-gap: 5px; /* will contain if #first is longer than #second */
+        align-content: center;
+    }
+    .profile_pic {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+    #id_full_name, #id_phone_number, #id_mail {
+        width: 100%;
+    }
+
+    .admin_button {
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .delete_button {background-color: red}
+    .update_button {background-color: forestgreen}
+</style>
+<h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
+
+<div class="row" style="padding-bottom: 10px">
+    <div class="col-md-3">
+        <div class="card card-body">
+            <a class="btn btn-warning" href="{% url 'index' %}">&#8592; Spátky</a>
+            <hr>
+            <h3 style="text-align: center">Profil uživatele</h3>
+            <h1 style="text-align: center">{{User.fullname}}</h1>
+            <hr>
+            <img class="profile_pic" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}">
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card card-body" style="margin-right: 30px; margin-top: 32px">
+            <table style="overflow-x: auto;" class="table">
+                <tr>
+                    <th>Jméno</th>
+                    <td>{{user.full_name}}</td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+                    <td>{{user.role}}</td>
+                </tr>
+                <tr>
+                    <th>Datum narození</th>
+                    <td>{{user.birthdate|date:'d.n.Y'}}</td>
+                </tr>
+                <tr>
+                    <th>Telefoní č.</th>
+                    <td>{{user.phone_number}}</td>
+                </tr>
+                <tr>
+                    <th>E-mail</th>
+                    <td>{{user.mail}}</td>
+                </tr>
+                <tr>
+                    <th>Ověření</th>
+                    <td>{{user.user_verification}}</td>
+                </tr>
+                <tr>
+                    <th>Login</th>
+                    <td>{{user.user_name}}</td>
+                </tr>
+                <tr>
+                    <th>Heslo</th>
+                    <td>{{user.password}}</td>
+                </tr>
+            </table>
+
+            <button class="admin_button update_button"><a href="{% url 'user_update' user.id %}">Upravit uživatele</a></button>
+            <button class="admin_button delete_button"><a href="{% url 'user_delete' user.id %}">Odstranit uživatele</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_veterinary' user.id %}">Změnit na veterináře</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_keeper' user.id %}">Změnit na pečovatele</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_admin' user.id %}">Změnit na administrátora</a></button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
