@@ -149,10 +149,8 @@ class AllUsersForm(ModelForm):
 
 
 class EditVetRequest(ModelForm):
-    model = Requests
-    fields = ('contractor', 'solver', 'animal', 'datetime_start', 'datetime_end', 'veterinary_req', 'request_name',
-              'request_description', 'request_verification', 'outing_assigned')
-    datetime_end = forms.DateField(label="Konec")
+    datetime_end = forms.DateTimeField(label="Konec", widget=forms.DateTimeInput(format='%d.%m.%Y %H:%M'),
+                                       input_formats=['%d.%m.%Y %H:%M'])
     request_name = forms.CharField(label="Název")
     request_description = forms.CharField(required=False, label="Popis")
 

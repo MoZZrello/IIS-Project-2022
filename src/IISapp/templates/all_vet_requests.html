@@ -83,7 +83,7 @@
                         <td>{{req.datetime_end|date:"d.n.Y H:i"}}</td>
                         <td>{{req.request_name}}</td>
                         <td>{{req.request_description}}</td>
-                        <td><a href="{% url 'vet_request_edit' req.animal.id%}" target="popup" onclick="window.open('{% url 'vet_request_edit' req.animal.id%}','popup','width=600,height=600'); return false;">Upravit</a></td>
+                        <td><a href="{% url 'vet_request_edit' req.id%}" target="popup" onclick="window.open('{% url 'vet_request_edit' req.id%}','popup','width=600,height=600'); return false;">Upravit</a></td>
                     </tr>
 
                 {% endfor %}

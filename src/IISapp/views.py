@@ -327,16 +327,17 @@ def add_vet_request(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Veterinář'])
 def vet_request_edit(request, pk):
-    form = EditVetRequest()
+    vet_request = Requests.objects.filter(id=pk).first()
+    form2 = EditVetRequest(instance=vet_request)
 
     if request.method == 'POST':
-        form = EditVetRequest(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('all_vet_requests')
+        form2 = EditVetRequest(request.POST, request.FILES, instance=vet_request)
+        if form2.is_valid():
+            form2.save()
 
-    context = {'form': form}
+    context = {'form2': form2}
     return render(request, 'vet_request_edit.html', context)
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Veterinář'])
