@@ -389,6 +389,14 @@ def user_to_admin(request, pk):
     User.objects.filter(id=pk).update(role=1)
     return redirect('admin_site')
 
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrátor'])
+def user_verification(request, pk):
+    User.objects.filter(id=pk).update(user_verification=True)
+    return redirect('admin_site')
+
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Administrátor'])
 def user_update(request, pk):

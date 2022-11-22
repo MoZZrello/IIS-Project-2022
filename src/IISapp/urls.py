@@ -33,5 +33,6 @@ urlpatterns = [
     path('admin/users/change/vet/<int:pk>', views.user_to_veterinary, name="user_to_veterinary"),
     path('admin/users/change/keeper/<int:pk>', views.user_to_keeper, name="user_to_keeper"),
     path('admin/users/change/admin/<int:pk>', views.user_to_admin, name="user_to_admin"),
+    path('admin/users/change/verification/<int:pk>', views.user_verification, name="user_verification"),
     path('admin/users/change/profil/<str:pk>', views.user_update, name="user_update"),
 ] 

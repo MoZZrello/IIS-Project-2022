@@ -37,6 +37,13 @@
 
     .delete_button {background-color: red}
     .update_button {background-color: forestgreen}
+    .verification_button {background-color: lightblue}
+
+    a {color: white}
+    a:link { text-decoration: none; }
+    a:visited { text-decoration: none; }
+    a:hover { text-decoration: none; }
+    a:active { text-decoration: none; }
 </style>
 <h1 style="padding-top: 70px; background-color: mediumseagreen"></h1>
 
@@ -89,6 +96,7 @@
             </table>
 
             <button class="admin_button update_button"><a href="{% url 'user_update' user.id %}">Upravit uživatele</a></button>
+            <button class="admin_button verification_button"><a href="{% url 'user_verification' user.id %}">Ověření uživatele</a></button>
             <button class="admin_button delete_button"><a href="{% url 'user_delete' user.id %}">Odstranit uživatele</a></button>
             <button class="admin_button update_button"><a href="{% url 'user_to_veterinary' user.id %}">Změnit na veterináře</a></button>
             <button class="admin_button update_button"><a href="{% url 'user_to_keeper' user.id %}">Změnit na pečovatele</a></button>
