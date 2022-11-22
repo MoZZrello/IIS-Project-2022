@@ -37,7 +37,8 @@ class CreateUserForm(UserCreationForm):
         widget=forms.DateInput(format='%d.%m.%Y'),
         input_formats=['%d.%m.%Y']
     )
-    phone_number = forms.CharField(label="Telefon")
+    phone_number = forms.CharField(label="Telefon", required=False)
+    mail = forms.CharField(label="Email", required=False)
 
     class Meta:
         model = User
@@ -122,7 +123,7 @@ class CreateVetRequestForm(ModelForm):
 
 class ProfileForm(ModelForm):
     full_name = forms.CharField(label="Celé jméno")
-    phone_number = forms.CharField(label="Telefon")
+    phone_number = forms.CharField(label="Telefon", required=False)
     mail = forms.CharField(required=False, label="Email")
     profile_picture = forms.ImageField(required=False, label="Profilová fotografie",
                                        widget=MyClearableFileInput(attrs={'name': 'btn'}))
@@ -145,3 +146,16 @@ class AllUsersForm(ModelForm):
     class Meta:
         model = User
         fields = ['full_name', 'phone_number', 'mail', 'profile_picture']
+
+
+class EditVetRequest(ModelForm):
+    model = Requests
+    fields = ('contractor', 'solver', 'animal', 'datetime_start', 'datetime_end', 'veterinary_req', 'request_name',
+              'request_description', 'request_verification', 'outing_assigned')
+    datetime_end = forms.DateField(label="Konec")
+    request_name = forms.CharField(label="Název")
+    request_description = forms.CharField(required=False, label="Popis")
+
+    class Meta:
+        model = Requests
+        fields = ['datetime_end', 'request_name', 'request_description']

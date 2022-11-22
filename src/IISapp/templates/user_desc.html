@@ -50,12 +50,12 @@
 <div class="row" style="padding-bottom: 10px">
     <div class="col-md-3">
         <div class="card card-body">
-            <a class="btn btn-warning" href="{% url 'index' %}">&#8592; Spátky</a>
+            <a class="btn btn-warning" href="{% url 'admin_site' %}">&#8592; Spátky</a>
             <hr>
             <h3 style="text-align: center">Profil uživatele</h3>
-            <h1 style="text-align: center">{{User.fullname}}</h1>
+            <h1 style="text-align: center">{{user2.fullname}}</h1>
             <hr>
-            <img class="profile_pic" src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}">
+            <img class="profile_pic" src="{% if user2.profile_picture %}{{ user2.profile_picture.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}">
         </div>
     </div>
     <div class="col-md-9">
@@ -63,44 +63,44 @@
             <table style="overflow-x: auto;" class="table">
                 <tr>
                     <th>Jméno</th>
-                    <td>{{user.full_name}}</td>
+                    <td>{{user2.full_name}}</td>
                 </tr>
                 <tr>
                     <th>Role</th>
-                    <td>{{user.role}}</td>
+                    <td>{{user2.role}}</td>
                 </tr>
                 <tr>
                     <th>Datum narození</th>
-                    <td>{{user.birthdate|date:'d.n.Y'}}</td>
+                    <td>{{user2.birthdate|date:'d.n.Y'}}</td>
                 </tr>
                 <tr>
                     <th>Telefoní č.</th>
-                    <td>{{user.phone_number}}</td>
+                    <td>{{user2.phone_number}}</td>
                 </tr>
                 <tr>
                     <th>E-mail</th>
-                    <td>{{user.mail}}</td>
+                    <td>{{user2.mail}}</td>
                 </tr>
                 <tr>
                     <th>Ověření</th>
-                    <td>{{user.user_verification}}</td>
+                    <td>{{user2.user_verification}}</td>
                 </tr>
                 <tr>
                     <th>Login</th>
-                    <td>{{user.user_name}}</td>
+                    <td>{{user2.user_name}}</td>
                 </tr>
                 <tr>
                     <th>Heslo</th>
-                    <td>{{user.password}}</td>
+                    <td>{{user2.password}}</td>
                 </tr>
             </table>
 
-            <button class="admin_button update_button"><a href="{% url 'user_update' user.id %}">Upravit uživatele</a></button>
-            <button class="admin_button verification_button"><a href="{% url 'user_verification' user.id %}">Ověření uživatele</a></button>
-            <button class="admin_button delete_button"><a href="{% url 'user_delete' user.id %}">Odstranit uživatele</a></button>
-            <button class="admin_button update_button"><a href="{% url 'user_to_veterinary' user.id %}">Změnit na veterináře</a></button>
-            <button class="admin_button update_button"><a href="{% url 'user_to_keeper' user.id %}">Změnit na pečovatele</a></button>
-            <button class="admin_button update_button"><a href="{% url 'user_to_admin' user.id %}">Změnit na administrátora</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_update' user2.id%}" target="popup" onclick="window.open('{% url 'user_update' user2.id%}','popup','width=1000,height=600'); return false;">Upravit uživatele</a></button>
+            <button class="admin_button verification_button"><a href="{% url 'user_verification' user2.id %}">Ověření uživatele</a></button>
+            <button class="admin_button delete_button"><a href="{% url 'user_delete' user2.id %}">Odstranit uživatele</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_veterinary' user2.id %}">Změnit na veterináře</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_keeper' user2.id %}">Změnit na pečovatele</a></button>
+            <button class="admin_button update_button"><a href="{% url 'user_to_admin' user2.id %}">Změnit na administrátora</a></button>
         </div>
     </div>
 </div>

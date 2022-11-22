@@ -326,6 +326,20 @@ def add_vet_request(request):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Veterinář'])
+def vet_request_edit(request, pk):
+    form = EditVetRequest()
+
+    if request.method == 'POST':
+        form = EditVetRequest(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('all_vet_requests')
+
+    context = {'form': form}
+    return render(request, 'vet_request_edit.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář'])
 def make_reservation(request, reqid):
     Requests.objects.filter(id=reqid).update(request_verification=False)
     req = Requests.objects.get(id=reqid)
@@ -353,8 +367,8 @@ def admin_site(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Administrátor'])
 def user_desc(request, userid):
-    user = User.objects.get(id=userid)
-    context = {'user': user}
+    user2 = User.objects.get(id=userid)
+    context = {'user2': user2}
     return render(request, 'user_desc.html', context)
 
 
@@ -400,14 +414,13 @@ def user_verification(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Administrátor'])
 def user_update(request, pk):
-    user = request.user
+    user = User.objects.filter(id=pk).first()
     form = ProfileForm(instance=user)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('admin_site.html')
 
     context = {'form': form}
     return render(request, 'user_update.html', context)

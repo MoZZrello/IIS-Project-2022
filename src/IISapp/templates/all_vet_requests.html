@@ -40,7 +40,7 @@
                 {% for req in next_requests %}
                     <tr>
                         <td>{{req.contractor.full_name}}</td>
-                        <td><a href="{% url 'all_animals' %}{{animal.id}}/">{{req.animal.animal_name}}</a></td>
+                        <td><a href="{% url 'all_animals' %}{{ req.animal.id }}/">{{req.animal.animal_name}}</a></td>
                         <td>{{req.datetime_start|date:"d.n.Y H:i"}}</td>
                         <td>{{req.datetime_end|date:"d.n.Y H:i"}}</td>
                         <td>{{req.request_name}}</td>
@@ -78,12 +78,12 @@
                     <tr>
                         <td>{{req.contractor.full_name}}</td>
                         <td>{{req.solver.full_name}}</td>
-                        <td><a href="{% url 'all_animals' %}{{animal.id}}/">{{req.animal.animal_name}}</a></td>
+                        <td><a href="{% url 'all_animals' %}{{ req.animal.id }}/">{{req.animal.animal_name}}</a></td>
                         <td>{{req.datetime_start|date:"d.n.Y H:i"}}</td>
                         <td>{{req.datetime_end|date:"d.n.Y H:i"}}</td>
                         <td>{{req.request_name}}</td>
                         <td>{{req.request_description}}</td>
-                        <td><a href="">Upravit</a></td>
+                        <td><a href="{% url 'vet_request_edit' req.animal.id%}" target="popup" onclick="window.open('{% url 'vet_request_edit' req.animal.id%}','popup','width=600,height=600'); return false;">Upravit</a></td>
                     </tr>
 
                 {% endfor %}
