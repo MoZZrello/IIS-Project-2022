@@ -219,7 +219,7 @@ def unassign_walk(request, resid):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['Pečovatel'])
+@allowed_users(allowed_roles=['Pečovatel', 'Veterinář'])
 def all_animals(request):
     user = request.user
     animals = Animal.objects.all()
@@ -426,4 +426,57 @@ def user_update(request, pk):
     context = {'form': form}
     return render(request, 'user_update.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Pečovatel'])
+def add_record(request, pk):
+    form = AddRecordForm({'animal': pk})
 
+    if request.method == 'POST':
+        form = AddRecordForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('all_animals')
+
+    context = {'form': form}
+    return render(request, 'add_record.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář'])
+def add_health_record(request, pk):
+    form = AddRecordForm({'animal': pk, 'record_type': "Zdravotní záznam"})
+
+    if request.method == 'POST':
+        form = AddRecordForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('all_animals')
+
+    context = {'form': form}
+    return render(request, 'add_record.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář', 'Pečovatel'])
+def edit_record(request, pk):
+    rec = Record.objects.filter(id=pk).first()
+    form2 = AddRecordForm(instance=rec)
+
+    if request.method == 'POST':
+        form2 = AddRecordForm(request.POST, request.FILES, instance=rec)
+        if form2.is_valid():
+            form2.save()
+            return redirect('/animal/all/' + str(rec.animal.id) + '/')
+
+    context = {'form2': form2}
+    return render(request, 'edit_record.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Veterinář', 'Pečovatel'])
+def delete_record(request, pk):
+    rec = Record.objects.get(id=pk)
+    if request.method == 'POST':
+        rec.delete()
+        return redirect('/animal/all/' + str(rec.animal.id) + '/')
+
+    context = {'rec': rec}
+    return render(request, 'delete_record.html', context)

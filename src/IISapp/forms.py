@@ -157,3 +157,17 @@ class EditVetRequest(ModelForm):
     class Meta:
         model = Requests
         fields = ['datetime_end', 'request_name', 'request_description']
+
+
+class AddRecordForm(ModelForm):
+    animal = MyAnimalChoiceField(queryset=Animal.objects.all())
+    class Meta:
+        model = Record
+        fields = ['animal', 'record_name', 'record_type', 'record_description']
+
+    def __init__(self, *args, **kwargs):
+        super(AddRecordForm, self).__init__(*args, **kwargs)
+        self.fields['animal'].label = "Zvířátko"
+        self.fields['record_name'].label = "Název záznamu"
+        self.fields['record_type'].label = "Typ záznamu"
+        self.fields['record_description'].label = "Popis"

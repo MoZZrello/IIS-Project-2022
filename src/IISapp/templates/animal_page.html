@@ -69,6 +69,9 @@
     <div class="col-md">
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Záznamy</div>
+            {% if user.role.id == 2 %}
+            <div><a class="btn btn-sm btn-info" href="{% url 'add_record' animal.id %}" style="background-color: forestgreen;color: white;">Přidat záznam</a></div>
+            {% endif %}
         </div>
         {% if record_count > 0 %}
             <div class="card card-body">
@@ -76,11 +79,19 @@
                     <th>Název</th>
                     <th>Typ záznamu</th>
                     <th>Popis</th>
+                    {% if user.role.id == 2 %}
+                    <th></th>
+                    <th></th>
+                    {% endif %}
                     {% for i in record %}
                         <tr>
                             <td>{{i.record_name}}</td>
                             <td>{{i.record_type}}</td>
                             <td>{{i.record_description}}</td>
+                            {% if user.role.id == 2 %}
+                            <td><a href="{% url 'edit_record' i.id %}">Upravit</a></td>
+                            <td><a href="{% url 'delete_record' i.id %}">Odstránit</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </table>
@@ -98,6 +109,9 @@
     <div class="col-md">
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Zdravotní záznamy</div>
+            {% if user.role.id == 3 %}
+            <div><a class="btn btn-sm btn-info" href="{% url 'add_health_record' animal.id %}" style="background-color: forestgreen;color: white;">Přidat záznam</a></div>
+            {% endif %}
         </div>
         {% if health_record_count > 0 %}
             <div class="card card-body">
@@ -105,11 +119,19 @@
                     <th>Název</th>
                     <th>Typ záznamu</th>
                     <th>Popis</th>
+                    {% if user.role.id == 3 %}
+                    <th></th>
+                    <th></th>
+                    {% endif %}
                     {% for i in healt_records %}
                         <tr>
                             <td>{{i.record_name}}</td>
                             <td>{{i.record_type}}</td>
                             <td>{{i.record_description}}</td>
+                            {% if user.role.id == 3 %}
+                            <td><a href="{% url 'edit_record' i.id %}">Upravit</a></td>
+                            <td><a href="{% url 'delete_record' i.id %}">Odstránit</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </table>

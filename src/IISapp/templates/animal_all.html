@@ -25,8 +25,10 @@
     <div class="col-md">
         <div class="card card-body wrapper">
             <div style="font-size: 30px;">Všechny zvířátka</div>
+            {% if user.role.id == 2 %}
             <div><a class="btn btn-sm btn-info" href="{% url 'add_animals' %}" style="background-color: forestgreen;color: white;">Přidat zvíře</a></div>
             <div><a class="btn btn-sm btn-info" href="{% url 'add_vet_request' %}" style="background-color: forestgreen;color: white;">Vytvořit požadavek na veterináře</a></div>
+            {% endif %}
         </div>
         <div class="card card-body">
             <table class="table">
@@ -35,12 +37,14 @@
                 <th>Druh</th>
                 <th>Rasa</th>
                 <th>Věk</th>
-                <th>Popis</th>
                 <th>Datum odchycení</th>
+                {% if user.role.id == 2 %}
+                <th>Popis</th>
                 <th>Vhodný na venčení</th>
                 <th>Adoptovaný</th>
                 <th></th>
                 <th></th>
+                {% endif %}
                 {% for animal in animals %}
                     <tr>
                         <td><img class="profile_pic" src="{% if animal.image %}{{ animal.image.url }}{% else %}/static/img/profile_pic_default.jpg{% endif %}"></td>
@@ -48,14 +52,15 @@
                         <td>{{animal.species}}</td>
                         <td>{{animal.breed}}</td>
                         <td>{{animal.age}}</td>
-                        <td>{{animal.animal_description}}</td>
                         <td>{{animal.capture_date|date:"d.n.Y"}}</td>
+                        {% if user.role.id == 2 %}
+                        <td>{{animal.animal_description}}</td>
                         <td>{{animal.outing_suitable|yesno:"Ano,Ne" }}</td>
                         <td>{{animal.animal_verification|yesno:"Ano,Ne" }}</td>
                         <td><a href="{% url 'update_animals' animal.id %}">Upravit</a></td>
                         <td><a href="{% url 'delete_animals' animal.id %}">Odstránit</a></td>
+                        {% endif %}
                     </tr>
-
                 {% endfor %}
             </table>
         </div>

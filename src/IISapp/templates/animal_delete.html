@@ -11,7 +11,7 @@
     <form action="{% url 'delete_animals' animal.id %}" method="POST">
         {% csrf_token %}
 
-        <a href="{% url 'all_animals' %}">Zrušit<</a>
+        <a href="{% url 'all_animals' %}">Zrušit</a>
         <input type="submit" name="Odstránit">
     </form>
 </div>
