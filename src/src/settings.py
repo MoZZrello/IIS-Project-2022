@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -141,4 +144,12 @@ MEDA_ROOT = os.path.join(BASE_DIR, 'static/img')
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
+LOGIN_URL = '/login/'
+
 DATE_INPUT_FORMATS = '%d/%m/%Y'
+
+SESSION_EXPIRE_SECONDS = 300
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

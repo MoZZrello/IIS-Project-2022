@@ -220,7 +220,7 @@ def unassign_walk(request, resid):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Pečovatel'])
-def all_animals(request, pk):
+def all_animals(request):
     user = request.user
     animals = Animal.objects.all()
     context = {'user': user, 'animals': animals}
