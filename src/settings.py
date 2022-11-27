@@ -158,3 +158,4 @@ SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode'] 
