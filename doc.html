@@ -87,16 +87,24 @@ Prerekvizity pre lokálne spustenie:
     <li>Pip</li>
     <li>Django 4.1.1</li>
     <li>Xampp pre MySQL databázu a Apache webserver</li>
-    <li>Všetky položky v requirements.txt</li>
+    <li>Pre Debian / Ubuntu príkaz:</br>
+        sudo apt-get install python3-dev default-libmysqlclient-dev build-essential </br>
+    </li>
+    <li>Pre Red Hat / CentOS príkaz: </br>
+        sudo yum install python3-devel mysql-devel </br> </li>
+    <li>Následne položky v requirements.txt cez príkaz: </br>
+        pip install -r requirements.txt
+    </li>
 </ul>
 
 Postup:
 <ol>
+    <li>Nainštalovanie prerekvizít</li>
 	<li>Vytvorenie a nastavenie databázy iis_mysql</li>
 	<li>Importovanie scriptu iis_mysql.sql</li>
     <li>Spustenie akcie apache a mysql v aplikácií xampp</li>
     <li>Sputenie serveru príkazom - python3 manage.py runserver
-        <li>Stránka je teraz dostupná na localhost adrese a porte 8000.</li>
+    <li>Stránka je teraz dostupná na localhost adrese a porte 8000.</li>
 </ol>
 
 <h2>Známé problémy</h2>
