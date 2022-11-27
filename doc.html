@@ -2,7 +2,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=iso-8859-2"/>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html"/>
     <title>Projekt IIS</title>
     <style type="text/css">
     	table { border-collapse: collapse; }
@@ -27,68 +28,75 @@
 	    <a href="mailto:xsvobo1v@stud.fit.vutbr.cz">xsvobo1v@stud.fit.vutbr.cz</a> - 
 		popis činnosti v týmu
 	</dd>
-  <dd>Teréziaa Hundáková <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+  <dd>Terézia Hundáková <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
 	    <a href="mailto:xhunda01@stud.fit.vutbr.cz">xhunda01@stud.fit.vutbr.cz</a> - 
 		popis činnosti v týmu
 	</dd>
 	<dt>URL aplikace</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
-	<dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+	<dd><a href="https://iisutulek22.herokuapp.com/">https://iisutulek22.herokuapp.com/</a></dd>
 </dl>
 
 <h2>Uživatelé systému pro testování</h2>
 <p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
 <table>
 <tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
-<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+<tr><td>admin</td><td>Tester123</td><td>Administrátor</td></tr>
+<tr><td>figs_vet</td><td>Tester123</td><td>Veterinář</td></tr>
+<tr><td>mrkvanaprovazku</td><td>Tester123</td><td>Pečovatel</td></tr>
+<tr><td>regtest1</td><td>Tester123</td><td>Dobrovolník</td></tr>
 </table>
 
 <p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
 
 <h3>Video</h3>
 
-<p>Přiložte odkaz na komentované video demostrující použití informačního systému. Zaměřte se na případy užití definované zadáním (např. registrace uživatele, správa uživatelů a činnosti jednotlivých rolí). Video nahrajte například na VUT Google Drive, kde ho bude možné přímo spustit z odkazu.</p> 
+<a href="https://www.youtube.com/watch?v=qC2moFqmMm8">https://www.youtube.com/watch?v=qC2moFqmMm8</a>
 
 <h2>Implementace</h2>
-<p>Pre implementáciu bol použitý framework <i>Django</i>. Štruktúra a architektúra projektu je navrhnutá podľa doporučovaných konvencií v tomto nástroji. 
-Django používa MVC, avšak Views sú v prípade Djanga klasifikované ako Controllers a Controllers sú Views. Následne využívame templates - html súbory uložené v priečinku templates, v ktorých prezentujeme dáta.
-Hlavnými časťami projektu sú súbory models.py, views.py, forms.py a urls.py, kde sa rieši url routing.
+<p>
+    Pre implementáciu bol použitý framework <i>Django</i>. Štruktúra a architektúra projektu je navrhnutá podľa doporučovaných konvencií v tomto nástroji.
+Django používa MVC, avšak Django Views zastupujú v prípade Djanga Controllers a Django templates sú Views. Templates sú html súbory uložené v priečinku templates, v ktorých prezentujeme dáta.
+Hlavnými časťami projektu sú súbory models.py, views.py, forms.py a urls.py, kde sa rieši url routing. Následne sme implementovali aj filtre v filters.py a kontrolovanie autentikácie užívateľa v decorators.py.
 <p>
 V models.py má na starosti dáta a databázovú schému, v ktorej sme si zadefinovali triedy, ktoré sú podtriedami models.Model a následne sme si pomocou dátových polí z nadtriedy vytvorili jednotlivé atribúty.
-Views.py je súbor, kde je spravená väčšina logiky IS. Pri implementácií sme využili funkcie, ktoré nám posytol Django. Funkcie v tomto súbore si môžeme rozdeliť na 2 podcelky. 
-Prvým je FunctionBasedView, ktorý má za úlohu prijať ako argument Http požiadavky (HttpRequest) a ako objekt vrátiť http odpoveď (HttpResponse). 
+Views.py je súbor, kde je spravená väčšina logiky IS. Pri implementácií sme využili funkcie, ktoré nám posytol framework Django. Funkcie v tomto súbore si môžeme rozdeliť na 2 podcelky.
+</p>
+<p>
+    Prvým je FunctionBasedView, ktorý má za úlohu prijať ako argument Http požiadavky (HttpRequest) a ako objekt vrátiť http odpoveď (HttpResponse).
 </p>
     
 <p>
-Druhým je ClassBasedView, ktorý má na starosť prijatie konkrétneho požiadavlu, jeho spracovanie a odoslanie odpovede. 
+    Druhým je ClassBasedView, ktorý má na starosť prijatie konkrétneho požiadavku, jeho spracovanie a odoslanie odpovede.
 </p>
 
 <p>
-Vo forms.py sú implementované jednotlivé formuláre ku views. Validácia prebieha automaticky pomocou frameworku. Zhromažďuje informácie o užívateľoch, ktoré sú potom odoslané na server. 
+    Vo forms.py sú implementované jednotlivé formuláre ku views. Validácia prebieha automaticky pomocou frameworku. Zhromažďuje informácie o užívateľoch, ktoré sú potom odoslané na server.
 </p>
 
 <h3>Databáze</h3>
 
 Zde vložte grafické schéma relační databáze (tabulek v databázi).
 
+<img src="./static/img/diagram.png" alt="Schéma relační databáze">
+
 <h2>Instalace</h2>
 
-Prerekvizity:
+Prerekvizity pre lokálne spustenie:
 <ul>
     <li>Python 3.10</li>
-    <li>Django ???</li>
-    <li>Xampp</li>
+    <li>Pip</li>
+    <li>Django 4.1.1</li>
+    <li>Xampp pre MySQL databázu a Apache webserver</li>
+    <li>Všetky položky v requirements.txt</li>
 </ul>
 
 Postup:
 <ol>
 	<li>Vytvorenie a nastavenie databázy iis_mysql</li>
-	<li>Importovanie scriptu iis_mysql.sql z priečinku src</li>
+	<li>Importovanie scriptu iis_mysql.sql</li>
     <li>Spustenie akcie apache a mysql v aplikácií xampp</li>
-    <li>Sputenie serveru - python manage.py runserver
-        <li>Stránka je teraz dostupná na <a href=""></a></li>
+    <li>Sputenie serveru príkazom - python3 manage.py runserver
+        <li>Stránka je teraz dostupná na localhost adrese a porte 8000.</li>
 </ol>
 
 <h2>Známé problémy</h2>
