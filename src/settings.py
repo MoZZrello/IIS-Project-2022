@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.forms',
     'django_filters',
-    'IISapp',
+    'iisapp',
 ]
 
 MIDDLEWARE = [
@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iis_mysql',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'NAME': 'bcz48a0v0lissmiwplzm',
+        'USER': 'uvi9p1su8bxhbdds',
+        'PASSWORD': 'NOaX2wQ7WcTqSizNMcQc',
+        'HOST': 'bcz48a0v0lissmiwplzm-mysql.services.clever-cloud.com',
         'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
@@ -138,7 +138,7 @@ STATIC_ROOT = os.path.join('src/static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "IISapp.User"
+AUTH_USER_MODEL = "iisapp.User"
 
 MEDIA_URL = '/img/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/img')

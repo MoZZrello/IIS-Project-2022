@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('IISapp', '0002_remove_record_record_end_remove_record_record_start_and_more'),
+        ('iisapp', '0002_remove_record_record_end_remove_record_record_start_and_more'),
     ]
 
     operations = [

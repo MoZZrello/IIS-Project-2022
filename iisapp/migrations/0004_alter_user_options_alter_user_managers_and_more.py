@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
-        ('IISapp', '0003_rename_phone_numb_user_phone_number_user_last_login'),
+        ('iisapp', '0003_rename_phone_numb_user_phone_number_user_last_login'),
     ]
 
     operations = [
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='role',
-            field=models.ForeignKey(default=4, on_delete=django.db.models.deletion.CASCADE, to='IISapp.user_roles'),
+            field=models.ForeignKey(default=4, on_delete=django.db.models.deletion.CASCADE, to='iisapp.user_roles'),
         ),
         migrations.AlterField(
             model_name='user',

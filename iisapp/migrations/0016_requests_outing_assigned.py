@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('IISapp', '0015_alter_animal_image'),
+        ('iisapp', '0015_alter_animal_image'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='requests',
             name='outing_assigned',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='IISapp.outing_reservation'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='iisapp.outing_reservation'),
         ),
     ]

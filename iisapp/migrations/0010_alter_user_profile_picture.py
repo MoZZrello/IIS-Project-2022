@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('IISapp', '0009_alter_user_profile_picture'),
+        ('iisapp', '0009_alter_user_profile_picture'),
     ]
 
     operations = [

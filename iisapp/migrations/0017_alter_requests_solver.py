@@ -8,7 +8,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('IISapp', '0016_requests_outing_assigned'),
+        ('iisapp', '0016_requests_outing_assigned'),
     ]
 
     operations = [

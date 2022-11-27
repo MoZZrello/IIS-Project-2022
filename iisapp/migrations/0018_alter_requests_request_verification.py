@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('IISapp', '0017_alter_requests_solver'),
+        ('iisapp', '0017_alter_requests_solver'),
     ]
 
     operations = [
