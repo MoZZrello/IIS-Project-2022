@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-2"/>
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
+
+<h1>Název zadání (editujte)</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>Richard Harman <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xharma05@stud.fit.vutbr.cz">xharma05@stud.fit.vutbr.cz</a> -
+		popis činnosti v týmu
+	</dd>
+	<dd>Tomáš Svoboda <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xsvobo1v@stud.fit.vutbr.cz">xsvobo1v@stud.fit.vutbr.cz</a> - 
+		popis činnosti v týmu
+	</dd>
+  <dd>Teréziaa Hundáková <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xhunda01@stud.fit.vutbr.cz">xhunda01@stud.fit.vutbr.cz</a> - 
+		popis činnosti v týmu
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
+	<dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
+<tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
+<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+</table>
+
+<p>(Diagram případů užití není nutné vkládat, pokud IS implementuje role a případy užití definované zadáním.)</p> 
+
+<h3>Video</h3>
+
+<p>Přiložte odkaz na komentované video demostrující použití informačního systému. Zaměřte se na případy užití definované zadáním (např. registrace uživatele, správa uživatelů a činnosti jednotlivých rolí). Video nahrajte například na VUT Google Drive, kde ho bude možné přímo spustit z odkazu.</p> 
+
+<h2>Implementace</h2>
+<p>Pre implementáciu bol použitý framework <i>Django</i>. Štruktúra a architektúra projektu je navrhnutá podľa doporučovaných konvencií v tomto nástroji. 
+Django používa MVC, avšak Views sú v prípade Djanga klasifikované ako Controllers a Controllers sú Views. Následne využívame templates - html súbory uložené v priečinku templates, v ktorých prezentujeme dáta.
+Hlavnými časťami projektu sú súbory models.py, views.py, forms.py a urls.py, kde sa rieši url routing.
+<p>
+V models.py má na starosti dáta a databázovú schému, v ktorej sme si zadefinovali triedy, ktoré sú podtriedami models.Model a následne sme si pomocou dátových polí z nadtriedy vytvorili jednotlivé atribúty.
+Views.py je súbor, kde je spravená väčšina logiky IS. Pri implementácií sme využili funkcie, ktoré nám posytol Django. Funkcie v tomto súbore si môžeme rozdeliť na 2 podcelky. 
+Prvým je FunctionBasedView, ktorý má za úlohu prijať ako argument Http požiadavky (HttpRequest) a ako objekt vrátiť http odpoveď (HttpResponse). 
+</p>
+    
+<p>
+Druhým je ClassBasedView, ktorý má na starosť prijatie konkrétneho požiadavlu, jeho spracovanie a odoslanie odpovede. 
+</p>
+
+<p>
+Vo forms.py sú implementované jednotlivé formuláre ku views. Validácia prebieha automaticky pomocou frameworku. Zhromažďuje informácie o užívateľoch, ktoré sú potom odoslané na server. 
+</p>
+
+<h3>Databáze</h3>
+
+Zde vložte grafické schéma relační databáze (tabulek v databázi).
+
+<h2>Instalace</h2>
+
+Prerekvizity:
+<ul>
+    <li>Python 3.10</li>
+    <li>Django ???</li>
+    <li>Xampp</li>
+</ul>
+
+Postup:
+<ol>
+	<li>Vytvorenie a nastavenie databázy iis_mysql</li>
+	<li>Importovanie scriptu iis_mysql.sql z priečinku src</li>
+    <li>Spustenie akcie apache a mysql v aplikácií xampp</li>
+    <li>Sputenie serveru - python manage.py runserver
+        <li>Stránka je teraz dostupná na <a href=""></a></li>
+</ol>
+
+<h2>Známé problémy</h2>
+<p>Chybové hlášky nemajú rovnaký jazyk.</p>
+
+</body>
+</html>
