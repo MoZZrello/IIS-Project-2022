@@ -48,10 +48,17 @@ class CreateUserForm(UserCreationForm):
 class CreateWalkForm(ModelForm):
     user_name = MyUserChoiceField(queryset=User.objects.all())
     animal = MyAnimalChoiceField(queryset=Animal.objects.all())
+    outing_start = forms.DateTimeField(
+        widget=forms.DateTimeInput(format='%d.%m.%Y %H:%M'),
+        input_formats=['%d.%m.%Y %H:%M']
+    )
+    outing_end = forms.DateTimeField(
+        widget=forms.DateTimeInput(format='%d.%m.%Y %H:%M'),
+        input_formats=['%d.%m.%Y %H:%M']
+    )
 
     class Meta:
         model = outing_reservation
-        widgets = {'outing_start': forms.DateTimeInput(), 'outing_end': forms.DateTimeInput()}
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
